@@ -18,6 +18,5 @@ public class DrumstickController : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         AudioSource audioData = other.GetComponent<AudioSource>();
         audioData.Play(0);
-        Debug.Log("started");
     }
 }
