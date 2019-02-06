@@ -18,11 +18,17 @@ public class DrumController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        note = other.gameObject;
+        if(other.gameObject.tag != "Drumstick" && other.gameObject.tag != "Player")
+        {
+            note = other.gameObject;
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
-        note = null;    
+        if (other.gameObject.tag != "Drumstick" && other.gameObject.tag != "Player")
+        {
+            note = null;
+        }
     }
 }

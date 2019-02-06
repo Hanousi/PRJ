@@ -17,12 +17,12 @@ public class DrumstickController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         AudioSource audioData = other.GetComponent<AudioSource>();
+        audioData.Play(0);
         DrumController drumController = other.GetComponent<DrumController>();
         GameObject note = drumController.note;
         if(note)
         {
             Destroy(note);
         }
-        audioData.Play(0);
     }
 }

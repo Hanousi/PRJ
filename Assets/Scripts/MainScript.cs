@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class MainScript : MonoBehaviour
 {
     bool inMenu;
+    public GameObject gameAssets;
     private Text sliderText;
 
     void Start()
@@ -31,6 +32,8 @@ public class MainScript : MonoBehaviour
 
     void StartGame()
     {
-        Debug.Log("Button pressed");
+        gameAssets.SetActive(true);
+        DebugUIBuilder.instance.Hide();
+        inMenu = false;
     }
 }
