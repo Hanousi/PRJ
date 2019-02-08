@@ -11,25 +11,19 @@ public class NoteController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(Vector3.forward * (-Time.deltaTime * 2));
+        transform.Translate(Vector3.forward * (-Time.deltaTime * 3));
 
         switch (gameObject.tag)
         {
             case "TomNote":
-                transform.Translate(Vector3.down * Time.deltaTime / 5.75f);
+                transform.Translate(Vector3.down * Time.deltaTime / 3.83f);
                 break;
             case "CymbalNote":
-                transform.Translate(Vector3.right * Time.deltaTime / 9.5f);
+                transform.Translate(Vector3.right * Time.deltaTime / 6.3f);
                 break;
             case "RideNote":
-                transform.Translate(Vector3.left * Time.deltaTime / 9.5f);
+                transform.Translate(Vector3.left * Time.deltaTime / 6.3f);
                 break;
         }
-
-        //if(gameObject.tag == "TomNote") {
-        //    transform.Translate(Vector3.down * Time.deltaTime / 5.75f);
-        //} else if(gameObject.tag == "CymbalNote") {
-        //    transform.Translate(Vector3.right * Time.deltaTime / 9.5f);
-        //}
     }
 }
