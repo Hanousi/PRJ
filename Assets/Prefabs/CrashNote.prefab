@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114995924723622926}
   m_Layer: 0
   m_Name: CrashNote
-  m_TagString: CymbalNote
+  m_TagString: CrashNote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

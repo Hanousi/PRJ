@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114610914909973542}
   m_Layer: 0
   m_Name: HiTomNote
-  m_TagString: TomNote
+  m_TagString: HiTomNote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

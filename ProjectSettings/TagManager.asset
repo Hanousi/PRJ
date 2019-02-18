@@ -4,10 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - TomNote
-  - CymbalNote
   - RideNote
   - Drumstick
+  - Undefined
+  - HiHatNote
+  - CrashNote
+  - SnareDrumNote
+  - HiTomNote
+  - MidTomNote
+  - FloorTomNote
   layers:
   - Default
   - TransparentFX

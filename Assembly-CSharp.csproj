@@ -344,6 +344,7 @@
     <Compile Include="Assets\Scripts\DrumController.cs" />
     <Compile Include="Assets\Scripts\DrumstickController.cs" />
     <Compile Include="Assets\Scripts\MainScript.cs" />
+    <Compile Include="Assets\Scripts\NoteCatcherController.cs" />
     <Compile Include="Assets\Scripts\NoteController.cs" />
     <None Include="Assets\Oculus\Avatar\Content\Materials\AvatarMaterialStateShader.cginc" />
     <None Include="Assets\Oculus\Avatar\Resources\Materials\Version1.5\Avatar_PC_SingleComponent.shader" />

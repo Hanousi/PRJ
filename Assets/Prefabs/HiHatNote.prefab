@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114074907689912070}
   m_Layer: 0
   m_Name: HiHatNote
-  m_TagString: CymbalNote
+  m_TagString: HiHatNote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

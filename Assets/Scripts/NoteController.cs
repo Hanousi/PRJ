@@ -15,10 +15,12 @@ public class NoteController : MonoBehaviour {
 
         switch (gameObject.tag)
         {
-            case "TomNote":
+            case "HiTomNote":
+            case "MidTomNote":
                 transform.Translate(Vector3.down * Time.deltaTime / 3.83f);
                 break;
-            case "CymbalNote":
+            case "HiHatNote":
+            case "CrashNote":
                 transform.Translate(Vector3.right * Time.deltaTime / 6.3f);
                 break;
             case "RideNote":
