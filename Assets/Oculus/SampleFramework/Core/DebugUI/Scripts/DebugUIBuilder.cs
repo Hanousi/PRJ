@@ -156,6 +156,7 @@ public class DebugUIBuilder : MonoBehaviour
     len = toEnable.Count;
     for (int i = 0; i < len; ++i)
     {
+            Debug.Log(toEnable[i]);
       toEnable[i].SetActive(true);
     }
 

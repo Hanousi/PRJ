@@ -70,6 +70,8 @@ public class MainScript : MonoBehaviour
                 Dictionary<string, string> results = getGameResults(noteCatcherController.missedNotes);
 
                 Destroy(currentUI);
+                Destroy(GameObject.Find("UIHelpers(Clone)"));
+
                 currentUI = Instantiate(canvasWithDebug, new Vector3(0.32f, -0.46f, 2.43f), Quaternion.identity);
 
                 DebugUIBuilder.instance.AddLabel("Missed notes: ");
@@ -86,7 +88,6 @@ public class MainScript : MonoBehaviour
 
                 DebugUIBuilder.instance.AddButton("Close", enterSandBoxMode);
                 DebugUIBuilder.instance.Show();
-                inMenu = true;
             }
         }
     }
@@ -109,6 +110,7 @@ public class MainScript : MonoBehaviour
     private void enterSandBoxMode()
     {
         Destroy(currentUI);
+        Destroy(GameObject.Find("UIHelpers(Clone)"));
         buildMainMenu();
 
         gameAssets.SetActive(false);
@@ -225,7 +227,7 @@ public class MainScript : MonoBehaviour
         float[][] notePositions = levels[level];
         currentLevel = notePositions;
 
-        //DebugUIBuilder.instance.Hide();
+        DebugUIBuilder.instance.Hide();
         for(int i = 0; i < notePositions.Length; i++)
         {
             float[] drumNotePositions = notePositions[i];
