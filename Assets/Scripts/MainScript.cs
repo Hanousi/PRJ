@@ -38,7 +38,7 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         LevelSetUp();
-        StartGame(3);
+        //StartGame(3);
         buildMainMenu();
 
         inMenu = false;
