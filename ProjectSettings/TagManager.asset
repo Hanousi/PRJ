@@ -13,6 +13,13 @@ TagManager:
   - HiTomNote
   - MidTomNote
   - FloorTomNote
+  - SnareDrum
+  - Ride
+  - MiddleTom
+  - HiTom
+  - FloorTom
+  - Crash
+  - HiHat
   layers:
   - Default
   - TransparentFX

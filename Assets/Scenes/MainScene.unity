@@ -300,6 +300,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1064902087505070, guid: 84d1c199e097c224a87d43b15ec21b63, type: 2}
+      propertyPath: m_TagString
+      value: Crash
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84d1c199e097c224a87d43b15ec21b63, type: 2}
   m_IsPrefabAsset: 0
@@ -1073,6 +1077,10 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1721289299381200, guid: cfb0d31f96f26324c942264056b26404, type: 2}
+      propertyPath: m_TagString
+      value: HiTom
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfb0d31f96f26324c942264056b26404, type: 2}
   m_IsPrefabAsset: 0
@@ -1334,6 +1342,10 @@ Prefab:
         type: 2}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1401024926001476, guid: 8a52bc56ae9dc024ea079199c9235562, type: 2}
+      propertyPath: m_TagString
+      value: FloorTom
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a52bc56ae9dc024ea079199c9235562, type: 2}
@@ -1856,6 +1868,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1871524142066310, guid: 181e2c42b09af49409a1fbfc57608ada, type: 2}
+      propertyPath: m_TagString
+      value: SnareDrum
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 181e2c42b09af49409a1fbfc57608ada, type: 2}
   m_IsPrefabAsset: 0
@@ -1972,6 +1988,10 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1853195673445994, guid: 01119a0939737704fac9b30d40938ba3, type: 2}
+      propertyPath: m_TagString
+      value: HiHat
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01119a0939737704fac9b30d40938ba3, type: 2}
@@ -2695,6 +2715,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1985327475402220, guid: 413d8e6f1a75c1e4e8494d25de2a5d4a, type: 2}
+      propertyPath: m_TagString
+      value: Ride
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 413d8e6f1a75c1e4e8494d25de2a5d4a, type: 2}
   m_IsPrefabAsset: 0
@@ -3005,6 +3029,10 @@ Prefab:
         type: 2}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1413703312991930, guid: 80ef9f5fa1e74d847928837e7b19678b, type: 2}
+      propertyPath: m_TagString
+      value: MiddleTom
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80ef9f5fa1e74d847928837e7b19678b, type: 2}
@@ -3429,15 +3457,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4948721212918030, guid: 66cad2a33cd0c55498b91cf8d0124453, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.181
+      value: -0.192
       objectReference: {fileID: 0}
     - target: {fileID: 4948721212918030, guid: 66cad2a33cd0c55498b91cf8d0124453, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.943
+      value: 0.945
       objectReference: {fileID: 0}
     - target: {fileID: 4948721212918030, guid: 66cad2a33cd0c55498b91cf8d0124453, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.08
+      value: -0.157
       objectReference: {fileID: 0}
     - target: {fileID: 4948721212918030, guid: 66cad2a33cd0c55498b91cf8d0124453, type: 2}
       propertyPath: m_LocalRotation.x

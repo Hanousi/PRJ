@@ -25,13 +25,13 @@ public class MainScript : MonoBehaviour
     private float[][] currentLevel;
     private Dictionary<int, float[][]> levels;
     private Dictionary<string, int> ghostHits = new Dictionary<string, int>() {
-        { "HiHatNote", 0 },
-        { "CrashNote", 0 },
-        { "SnareDrumNote", 0 },
-        { "HiTomNote", 0 },
-        { "MidTomNote", 0},
-        { "FloorTomNote", 0},
-        { "RideNote", 0 }
+        { "HiHat", 0 },
+        { "Crash", 0 },
+        { "SnareDrum", 0 },
+        { "HiTom", 0 },
+        { "MidTom", 0},
+        { "FloorTom", 0},
+        { "Ride", 0 }
     };
     bool inMenu;
 
@@ -164,7 +164,14 @@ public class MainScript : MonoBehaviour
 
         float[][] level1 = new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f,
                 9, 10, 11, 12, 13, 13.5f, 14, 14.5f, 15, 15.5f, 16, 16.5f,
-                17, 18, 19, 20, 21, 21.5f, 22, 22.5f, 23, 23.5f, 24, 24.5f } };
+                17, 18, 19, 20, 21, 21.5f, 22, 22.5f, 23, 23.5f, 24, 24.5f },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { 18 }};
 
         float[][] level2 = new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f },
             new float[] { 9, 10, 11, 12, 13, 13.5f, 14, 14.5f, 15, 15.5f, 16, 16.5f },
@@ -173,7 +180,7 @@ public class MainScript : MonoBehaviour
             new float[] { 25, 26, 29, 29.5f, 30, 30.5f },
             new float[] { 27, 28, 31, 31.5f, 32, 32.5f },
             new float[] {  },
-            new float[] { 20 }
+            new float[] { 23 }
         };
 
         float[][] level3 = new float[][] { new float[] { 1, 1.5f, 2, 2.5f, 3, 3.5f, 4, 4.5f, 5, 5.5f, 6, 6.5f },
@@ -272,6 +279,10 @@ public class MainScript : MonoBehaviour
 
         DebugUIBuilder.instance.AddDivider();
         DebugUIBuilder.instance.AddButton("Level 1", delegate () { StartGame(1); });
+        DebugUIBuilder.instance.AddButton("Level 2", delegate () { StartGame(2); });
+        DebugUIBuilder.instance.AddButton("Level 3", delegate () { StartGame(3); });
+        DebugUIBuilder.instance.AddButton("Level 4", delegate () { StartGame(4); });
+        DebugUIBuilder.instance.AddButton("Level 5", delegate () { StartGame(5); });
         DebugUIBuilder.instance.AddDivider();
     }
 

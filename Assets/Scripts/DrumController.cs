@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DrumController : MonoBehaviour {
 
-    public GameObject note;
+    public GameObject note = null;
 
 	// Use this for initialization
 	void Start () {

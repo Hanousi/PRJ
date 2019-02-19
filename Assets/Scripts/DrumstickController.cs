@@ -30,7 +30,7 @@ public class DrumstickController : MonoBehaviour {
         }
         else
         {
-            OnMiss(note.tag);
+            OnMiss(other.tag);
         }
     }
 }
