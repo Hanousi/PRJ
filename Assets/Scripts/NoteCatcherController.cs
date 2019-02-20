@@ -33,4 +33,14 @@ public class NoteCatcherController : MonoBehaviour {
             Destroy(other.gameObject);
         }
     }
+
+    public void resetResults()
+    {
+        List<string> keys = new List<string>(missedNotes.Keys);
+
+        foreach(string key in keys)
+        {
+            missedNotes[key] = 0;
+        }
+    }
 }

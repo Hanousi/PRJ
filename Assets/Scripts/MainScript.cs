@@ -41,6 +41,8 @@ public class MainScript : MonoBehaviour
         //StartGame(3);
         buildMainMenu();
 
+        Debug.Log(1 / 3.0);
+
         inMenu = false;
     }
 
@@ -90,6 +92,7 @@ public class MainScript : MonoBehaviour
                 DebugUIBuilder.instance.Show();
 
                 resetGhostHits();
+                noteCatcherController.resetResults();
             }
         }
     }
@@ -157,6 +160,11 @@ public class MainScript : MonoBehaviour
 
                     break;
             }
+        }
+
+        foreach(KeyValuePair<string, string> kvp in results)
+        {
+            Debug.Log(kvp.Key + ": " + kvp.Value);
         }
 
         return results;
@@ -310,8 +318,8 @@ public class MainScript : MonoBehaviour
         }
         else
         {
-            double hitRate = (totalNotes - missedNotes[noteName]) / totalNotes;
-            results.Add(noteName, (hitRate * 100).ToString() + "%");
+            double hitRate = (totalNotes - missedNotes[noteName]) / (double)totalNotes;
+            results.Add(noteName, (hitRate * 100).ToString("0.##") + "%");
         }
 
 
