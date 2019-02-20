@@ -53,7 +53,7 @@ public class MainScript : MonoBehaviour
             inMenu = !inMenu;
         }
             
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        if (OVRInput.GetDown(OVRInput.Button.Four))
         {
             AudioSource kick = GetComponent<AudioSource>();
             kick.Play(0);
@@ -88,6 +88,8 @@ public class MainScript : MonoBehaviour
 
                 DebugUIBuilder.instance.AddButton("Close", enterSandBoxMode);
                 DebugUIBuilder.instance.Show();
+
+                resetGhostHits();
             }
         }
     }
@@ -288,7 +290,7 @@ public class MainScript : MonoBehaviour
         DebugUIBuilder.instance.AddDivider();
     }
 
-    void createNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
+    private void createNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
     {
         foreach (float position in drumNotePositions)
         {
@@ -300,7 +302,7 @@ public class MainScript : MonoBehaviour
         }
     }
 
-    void getHitRate(string noteName, int totalNotes, Dictionary<string, int> missedNotes, Dictionary<string, string> results)
+    private void getHitRate(string noteName, int totalNotes, Dictionary<string, int> missedNotes, Dictionary<string, string> results)
     {
         if (totalNotes == 0)
         {
@@ -313,5 +315,15 @@ public class MainScript : MonoBehaviour
         }
 
 
+    }
+
+    private void resetGhostHits()
+    {
+        List<string> keys = new List<string>(ghostHits.Keys);
+
+        foreach(string key in keys)
+        {
+            ghostHits[key] = 0;
+        }
     }
 }
