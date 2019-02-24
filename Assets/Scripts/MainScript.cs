@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Reflection;
 
 // Show off all the Debug UI components.
 public class MainScript : MonoBehaviour
@@ -18,13 +22,27 @@ public class MainScript : MonoBehaviour
     public Transform midTomNote;
     public Transform floorTomNote;
     public Transform rideNote;
-    private Text sliderText;
+    private GamePerformance[] hello = new GamePerformance[] { new GamePerformance(1, 2, 3, 4, 5, 6, 7), new GamePerformance(7, 6, 5, 4, 3, 2, 1) };
+    private string dataPath;
     private GameObject currentUI;
     private bool inGame = false;
     private float timeLeft = -1;
     private float[][] currentLevel;
     private Dictionary<int, float[][]> levels;
-    private Dictionary<string, int> ghostHits = new Dictionary<string, int>() {
+    private GamePerformance currentPerformance;
+    private SortedList<DateTime, GamePerformance> performanceRecord;
+    private Dictionary<string, int> performanceScore = new Dictionary<string, int>()
+    {
+        { "HiHat", 0 },
+        { "Crash", 0 },
+        { "SnareDrum", 0 },
+        { "HiTom", 0 },
+        { "MidTom", 0},
+        { "FloorTom", 0},
+        { "Ride", 0 }
+    };
+    private Dictionary<string, int> ghostHits = new Dictionary<string, int>()
+    {
         { "HiHat", 0 },
         { "Crash", 0 },
         { "SnareDrum", 0 },
@@ -38,10 +56,18 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         LevelSetUp();
-        //StartGame(3);
+        StartGame(3);
         buildMainMenu();
 
-        Debug.Log(1 / 3.0);
+        dataPath = Path.Combine(Application.persistentDataPath, "PerformanceData.dat");
+        performanceRecord = loadPerformanceData(dataPath);
+
+        foreach(KeyValuePair<DateTime, GamePerformance> gp in performanceRecord)
+        {
+            Debug.Log(gp.Value.ToString());
+        }
+
+        Debug.Log(performanceRecord.Count);
 
         inMenu = false;
     }
@@ -67,9 +93,12 @@ public class MainScript : MonoBehaviour
             if(timeLeft < 0)
             {
                 inGame = false;
+                GamePerformance gamePerformance = new GamePerformance(0, 0, 0, 0, 0, 0, 0);
 
                 NoteCatcherController noteCatcherController = noteCatcher.GetComponent<NoteCatcherController>();
                 Dictionary<string, string> results = getGameResults(noteCatcherController.missedNotes);
+
+                savePerformanceData();
 
                 Destroy(currentUI);
                 Destroy(GameObject.Find("UIHelpers(Clone)"));
@@ -162,11 +191,6 @@ public class MainScript : MonoBehaviour
             }
         }
 
-        foreach(KeyValuePair<string, string> kvp in results)
-        {
-            Debug.Log(kvp.Key + ": " + kvp.Value);
-        }
-
         return results;
     }
 
@@ -204,7 +228,7 @@ public class MainScript : MonoBehaviour
             new float[] { },
             new float[] { 6 }
         };
-
+  
         float[][] level4 = new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25.5f, 26.5f },
             new float[] { },
             new float[] { 3, 7, 11, 15, 19, 23, 26 },
@@ -236,8 +260,9 @@ public class MainScript : MonoBehaviour
     {
         float[][] notePositions = levels[level];
         currentLevel = notePositions;
+        currentPerformance = new GamePerformance(0, 0, 0, 0, 0, 0, 0);
 
-        DebugUIBuilder.instance.Hide();
+        //DebugUIBuilder.instance.Hide();
         for(int i = 0; i < notePositions.Length; i++)
         {
             float[] drumNotePositions = notePositions[i];
@@ -319,10 +344,67 @@ public class MainScript : MonoBehaviour
         else
         {
             double hitRate = (totalNotes - missedNotes[noteName]) / (double)totalNotes;
+            string drumName = LowercaseFirst(Regex.Split(noteName, "Note")[0]);
+
+            if (hitRate < 0.7) {
+                SetFieldValue(currentPerformance, drumName, 3);
+            } else if(hitRate < 0.8) {
+                SetFieldValue(currentPerformance, drumName, 2);
+            } else if(hitRate < 0.9) {
+                SetFieldValue(currentPerformance, drumName, 1);
+            }
+
             results.Add(noteName, (hitRate * 100).ToString("0.##") + "%");
         }
+    }
 
+    private void savePerformanceData()
+    {
+        getGhostHitScores();
+        performanceRecord.Add(DateTime.Now, currentPerformance);
 
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+        using (FileStream fileStream = File.Open(dataPath, FileMode.OpenOrCreate))
+        {
+            binaryFormatter.Serialize(fileStream, performanceRecord);
+        }
+    }
+
+    private static SortedList<DateTime, GamePerformance> loadPerformanceData(string path)
+    {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+        try
+        {
+            using (FileStream fileStream = File.Open(path, FileMode.Open))
+            {
+                return (SortedList<DateTime, GamePerformance>)binaryFormatter.Deserialize(fileStream);
+            }
+        } catch (FileNotFoundException e)
+        {
+            Debug.Log("Error: File not found, creating new load file.");
+
+            return new SortedList<DateTime, GamePerformance>() { };
+        }
+
+    }
+
+    private void getGhostHitScores()
+    {
+        foreach(KeyValuePair<string, int> kvp in ghostHits)
+        {
+            string drumName = LowercaseFirst(Regex.Split(kvp.Key, "Note")[0]);
+            int currentScore = (int)GetFieldValue(currentPerformance, drumName);
+
+            if (kvp.Value > 20) {
+                SetFieldValue(currentPerformance, drumName, currentScore + 3);
+            } else if(kvp.Value > 15) {
+                SetFieldValue(currentPerformance, drumName, currentScore + 2);
+            } else if (kvp.Value > 10) {
+                SetFieldValue(currentPerformance, drumName, currentScore + 1);
+            }
+        }
     }
 
     private void resetGhostHits()
@@ -333,5 +415,26 @@ public class MainScript : MonoBehaviour
         {
             ghostHits[key] = 0;
         }
+    }
+
+    public static void SetFieldValue(object instance, string strPropertyName, object newValue)
+    {  
+        Type type = instance.GetType();
+        FieldInfo fieldInfo = type.GetField(strPropertyName);
+
+        fieldInfo.SetValue(instance, newValue);
+    }
+
+    public static object GetFieldValue(object instance, string strPropertyName)
+    {
+        Type type = instance.GetType();
+        FieldInfo fieldInfo = type.GetField(strPropertyName);
+
+        return fieldInfo.GetValue(instance);
+    }
+
+    static string LowercaseFirst(string s)
+    {
+        return char.ToLower(s[0]) + s.Substring(1);
     }
 }
