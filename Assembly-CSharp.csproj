@@ -344,6 +344,7 @@
     <Compile Include="Assets\Scripts\Constants.cs" />
     <Compile Include="Assets\Scripts\DrumController.cs" />
     <Compile Include="Assets\Scripts\DrumstickController.cs" />
+    <Compile Include="Assets\Scripts\GameLevel.cs" />
     <Compile Include="Assets\Scripts\GamePerformance.cs" />
     <Compile Include="Assets\Scripts\MainScript.cs" />
     <Compile Include="Assets\Scripts\NoteCatcherController.cs" />

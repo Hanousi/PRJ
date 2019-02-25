@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -56,18 +57,19 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         LevelSetUp();
-        StartGame(4);
-        buildMainMenu();
-
         dataPath = Path.Combine(Application.persistentDataPath, "PerformanceData.dat");
         performanceRecord = loadPerformanceData(dataPath);
 
-        foreach(KeyValuePair<DateTime, GamePerformance> gp in performanceRecord)
+        foreach (KeyValuePair<DateTime, GamePerformance> gp in performanceRecord)
         {
             Debug.Log(gp.Value.ToString());
         }
 
         Debug.Log(performanceRecord.Count);
+
+
+        StartGame(4);
+        buildMainMenu();
 
         inMenu = false;
     }
@@ -198,6 +200,18 @@ public class MainScript : MonoBehaviour
     {
         levels = new Dictionary<int, float[][]>();
 
+        //GameLevel game1 = new GameLevel(1, new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f,
+        //        9, 10, 11, 12, 13, 13.5f, 14, 14.5f, 15, 15.5f, 16, 16.5f,
+        //        17, 18, 19, 20, 21, 21.5f, 22, 22.5f, 23, 23.5f, 24, 24.5f },
+        //    new float[] { },
+        //    new float[] { },
+        //    new float[] { },
+        //    new float[] { },
+        //    new float[] { },
+        //    new float[] { }},
+        //    18, 
+        //    new string[] { "HiHat" });
+
         float[][] level1 = new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f,
                 9, 10, 11, 12, 13, 13.5f, 14, 14.5f, 15, 15.5f, 16, 16.5f,
                 17, 18, 19, 20, 21, 21.5f, 22, 22.5f, 23, 23.5f, 24, 24.5f },
@@ -321,6 +335,35 @@ public class MainScript : MonoBehaviour
         DebugUIBuilder.instance.AddButton("Level 4", delegate () { StartGame(4); });
         DebugUIBuilder.instance.AddButton("Level 5", delegate () { StartGame(5); });
         DebugUIBuilder.instance.AddDivider();
+
+        if(performanceRecord.Count >= 5)
+        {
+            int aiRecommendation = getRecommendation();
+            DebugUIBuilder.instance.AddLabel("AI Suggesstion:");
+
+            DebugUIBuilder.instance.AddButton("Level " + aiRecommendation, delegate () { StartGame(aiRecommendation); }, DebugUIBuilder.DEBUG_PANE_RIGHT);
+        }
+    }
+
+    private int getRecommendation()
+    {
+        GamePerformance averageScores = performanceRecord.Values.Aggregate((x, y) => new GamePerformance(
+            x.hiHat + y.hiHat,
+            x.crash + y.crash,
+            x.snareDrum + y.snareDrum,
+            x.hiTom + y.hiTom,
+            x.midTom + y.midTom,
+            x.floorTom + y.floorTom,
+            x.ride + y.ride
+        ));
+
+        averageScores.averageScores(performanceRecord.Count);
+
+        string tag = averageScores.getMaxScore();
+
+        Debug.Log(tag);
+
+        return 3;
     }
 
     private void createNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
@@ -403,7 +446,7 @@ public class MainScript : MonoBehaviour
         foreach(KeyValuePair<string, int> kvp in ghostHits)
         {
             string drumName = LowercaseFirst(Regex.Split(kvp.Key, "Note")[0]);
-            int currentScore = (int)GetFieldValue(currentPerformance, drumName);
+            float currentScore = (float)GetFieldValue(currentPerformance, drumName);
 
             if (kvp.Value > 20) {
                 SetFieldValue(currentPerformance, drumName, currentScore + 3);
@@ -419,7 +462,7 @@ public class MainScript : MonoBehaviour
     {
         List<string> keys = new List<string>(ghostHits.Keys);
 
-        foreach(string key in keys)
+        foreach (string key in keys)
         {
             ghostHits[key] = 0;
         }
