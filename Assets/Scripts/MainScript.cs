@@ -56,7 +56,7 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         LevelSetUp();
-        StartGame(3);
+        StartGame(4);
         buildMainMenu();
 
         dataPath = Path.Combine(Application.persistentDataPath, "PerformanceData.dat");
@@ -327,11 +327,19 @@ public class MainScript : MonoBehaviour
     {
         foreach (float position in drumNotePositions)
         {
-            Instantiate(note, new Vector3(
+            Transform gameObject = Instantiate(note, new Vector3(
                 x == 0 ? (float)(xOffset + (position * xModifier)) : x,
                 y == 0 ? (float)(yOffset + (position * yModifier)) : y,
                 (float)((position * 2) + zOffset)
                 ), Quaternion.identity);
+
+            NoteController noteController = gameObject.GetComponent<NoteController>();
+            string drumName = Regex.Split(note.name, "Note")[0];
+            string targetName =  drumName + "Target";
+            string speedName = drumName + "Speed";
+
+            noteController.SetTarget(GameObject.Find(targetName).transform);
+            noteController.SetSpeed((float)GetConstantField(speedName));
         }
     }
 
@@ -431,6 +439,14 @@ public class MainScript : MonoBehaviour
         FieldInfo fieldInfo = type.GetField(strPropertyName);
 
         return fieldInfo.GetValue(instance);
+    }
+
+    public static object GetConstantField(string strPropertyName)
+    {
+        Type type = typeof(Constants);
+        FieldInfo fieldInfo = type.GetField(strPropertyName);
+
+        return fieldInfo.GetValue(null);
     }
 
     static string LowercaseFirst(string s)

@@ -341,6 +341,7 @@
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\Helpers\OVRMicInput.cs" />
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceMod.cs" />
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceModContext.cs" />
+    <Compile Include="Assets\Scripts\Constants.cs" />
     <Compile Include="Assets\Scripts\DrumController.cs" />
     <Compile Include="Assets\Scripts\DrumstickController.cs" />
     <Compile Include="Assets\Scripts\GamePerformance.cs" />
