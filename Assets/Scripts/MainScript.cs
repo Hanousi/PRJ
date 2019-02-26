@@ -23,25 +23,14 @@ public class MainScript : MonoBehaviour
     public Transform midTomNote;
     public Transform floorTomNote;
     public Transform rideNote;
-    private GamePerformance[] hello = new GamePerformance[] { new GamePerformance(1, 2, 3, 4, 5, 6, 7), new GamePerformance(7, 6, 5, 4, 3, 2, 1) };
     private string dataPath;
     private GameObject currentUI;
     private bool inGame = false;
     private float timeLeft = -1;
     private float[][] currentLevel;
-    private Dictionary<int, float[][]> levels;
+    private Dictionary<int, GameLevel> levels;
     private GamePerformance currentPerformance;
-    private SortedList<DateTime, GamePerformance> performanceRecord;
-    private Dictionary<string, int> performanceScore = new Dictionary<string, int>()
-    {
-        { "HiHat", 0 },
-        { "Crash", 0 },
-        { "SnareDrum", 0 },
-        { "HiTom", 0 },
-        { "MidTom", 0},
-        { "FloorTom", 0},
-        { "Ride", 0 }
-    };
+    private PerformanceRecord performanceRecord;
     private Dictionary<string, int> ghostHits = new Dictionary<string, int>()
     {
         { "HiHat", 0 },
@@ -60,15 +49,14 @@ public class MainScript : MonoBehaviour
         dataPath = Path.Combine(Application.persistentDataPath, "PerformanceData.dat");
         performanceRecord = loadPerformanceData(dataPath);
 
-        foreach (KeyValuePair<DateTime, GamePerformance> gp in performanceRecord)
+        foreach (GamePerformance gp in performanceRecord.GetQueue())
         {
-            Debug.Log(gp.Value.ToString());
+            Debug.Log(gp.ToString());
         }
 
-        Debug.Log(performanceRecord.Count);
+        Debug.Log(performanceRecord.GetQueue().Count);
 
-
-        StartGame(4);
+        //StartGame(3);
         buildMainMenu();
 
         inMenu = false;
@@ -198,21 +186,9 @@ public class MainScript : MonoBehaviour
 
     private void LevelSetUp()
     {
-        levels = new Dictionary<int, float[][]>();
+        levels = new Dictionary<int, GameLevel>();
 
-        //GameLevel game1 = new GameLevel(1, new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f,
-        //        9, 10, 11, 12, 13, 13.5f, 14, 14.5f, 15, 15.5f, 16, 16.5f,
-        //        17, 18, 19, 20, 21, 21.5f, 22, 22.5f, 23, 23.5f, 24, 24.5f },
-        //    new float[] { },
-        //    new float[] { },
-        //    new float[] { },
-        //    new float[] { },
-        //    new float[] { },
-        //    new float[] { }},
-        //    18, 
-        //    new string[] { "HiHat" });
-
-        float[][] level1 = new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f,
+        GameLevel game1 = new GameLevel(1, new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f,
                 9, 10, 11, 12, 13, 13.5f, 14, 14.5f, 15, 15.5f, 16, 16.5f,
                 17, 18, 19, 20, 21, 21.5f, 22, 22.5f, 23, 23.5f, 24, 24.5f },
             new float[] { },
@@ -220,63 +196,54 @@ public class MainScript : MonoBehaviour
             new float[] { },
             new float[] { },
             new float[] { },
-            new float[] { },
-            new float[] { 18 }};
+            new float[] { }},
+            18,
+            new string[] { "hiHat" });
 
-        float[][] level2 = new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f },
+        GameLevel game2 = new GameLevel(2, new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f },
             new float[] { 9, 10, 11, 12, 13, 13.5f, 14, 14.5f, 15, 15.5f, 16, 16.5f },
             new float[] { 17, 18, 19, 20 },
             new float[] { 21, 21.5f, 22, 22.5f, 23, 23.5f, 24, 24.5f },
             new float[] { 25, 26, 29, 29.5f, 30, 30.5f },
             new float[] { 27, 28, 31, 31.5f, 32, 32.5f },
-            new float[] {  },
-            new float[] { 23 }
-        };
+            new float[] {  }},
+            23,
+            new string[] { });
 
-        float[][] level3 = new float[][] { new float[] { 1, 1.5f, 2, 2.5f, 3, 3.5f, 4, 4.5f, 5, 5.5f, 6, 6.5f },
+        GameLevel game3 = new GameLevel(3, new float[][] { new float[] { 1, 1.5f, 2, 2.5f, 3, 3.5f, 4, 4.5f, 5, 5.5f, 6, 6.5f },
             new float[] { },
             new float[] { 2, 4, 6 },
             new float[] { },
             new float[] { },
             new float[] { },
-            new float[] { },
-            new float[] { 6 }
-        };
-  
-        float[][] level4 = new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25.5f, 26.5f },
+            new float[] { }},
+            6,
+            new string[] { "hiHat", "snareDrum"});
+
+        GameLevel game4 = new GameLevel(4, new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25.5f, 26.5f },
             new float[] { },
             new float[] { 3, 7, 11, 15, 19, 23, 26 },
             new float[] { },
             new float[] { },
             new float[] { 1, 5, 9, 13, 17, 21, 25 },
-            new float[] { },
-            new float[] { 20 }
-        };
+            new float[] { }},
+            20,
+            new string[] { "hiHat", "snareDrum", "floorTom" });
 
-        float[][] level5 = new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25.5f, 26.5f },
-            new float[] { },
-            new float[] { 3, 7, 11, 15, 19, 23, 26 },
-            new float[] { },
-            new float[] { },
-            new float[] { 1, 5, 9, 13, 17, 21, 25 },
-            new float[] { },
-            new float[] { 6 }
-        };
-
-        levels.Add(1, level1);
-        levels.Add(2, level2);
-        levels.Add(3, level3);
-        levels.Add(4, level4);
-        levels.Add(5, level5);
+        levels.Add(1, game1);
+        levels.Add(2, game2);
+        levels.Add(3, game3);
+        levels.Add(4, game4);
     }
 
     void StartGame(int level)
     {
-        float[][] notePositions = levels[level];
+        GameLevel gameLevel = levels[level];
+        float[][] notePositions = gameLevel.GetNotePositions();
         currentLevel = notePositions;
         currentPerformance = new GamePerformance(0, 0, 0, 0, 0, 0, 0);
 
-        //DebugUIBuilder.instance.Hide();
+        DebugUIBuilder.instance.Hide();
         for(int i = 0; i < notePositions.Length; i++)
         {
             float[] drumNotePositions = notePositions[i];
@@ -311,13 +278,10 @@ public class MainScript : MonoBehaviour
                     createNote(rideNote, drumNotePositions, 0, 0.87f, 0.106f, 1, 0, 0, 0.6f);
 
                     break;
-                default:
-                    timeLeft = drumNotePositions[0];
-
-                    break;
             }
         }
-       
+
+        timeLeft = gameLevel.GetDuration();
         gameAssets.SetActive(true);
         inGame = true;
 
@@ -336,18 +300,41 @@ public class MainScript : MonoBehaviour
         DebugUIBuilder.instance.AddButton("Level 5", delegate () { StartGame(5); });
         DebugUIBuilder.instance.AddDivider();
 
-        if(performanceRecord.Count >= 5)
+        if (performanceRecord.GetQueue().Count == 5)
         {
-            int aiRecommendation = getRecommendation();
-            DebugUIBuilder.instance.AddLabel("AI Suggesstion:");
+            GameLevel aiRecommendation = getRecommendation();
 
-            DebugUIBuilder.instance.AddButton("Level " + aiRecommendation, delegate () { StartGame(aiRecommendation); }, DebugUIBuilder.DEBUG_PANE_RIGHT);
+            if (aiRecommendation != null)
+            {
+                int levelNumber = aiRecommendation.GetLevelNumber();
+                string[] tags = aiRecommendation.GetTags();
+                string tagList = "";
+
+                for (int i = 0; i < tags.Length - 1; i++)
+                {
+                    tagList = tagList + tags[i] + ", ";
+                }
+
+                if (tagList == "")
+                {
+                    tagList = tags[0];
+                }
+
+                Debug.Log(levelNumber);
+
+                DebugUIBuilder.instance.AddLabel("AI Suggesstion:");
+                DebugUIBuilder.instance.AddLabel("It looks like your are struggling with playing the " + tagList + ". Try this exercise out:");
+
+                DebugUIBuilder.instance.AddButton("Level " + levelNumber, delegate () { StartGame(levelNumber); }, DebugUIBuilder.DEBUG_PANE_RIGHT);
+            }
         }
     }
 
-    private int getRecommendation()
+    private GameLevel getRecommendation()
     {
-        GamePerformance averageScores = performanceRecord.Values.Aggregate((x, y) => new GamePerformance(
+        Queue<GamePerformance> queue = performanceRecord.GetQueue();
+
+        GamePerformance averageScores = queue.Aggregate((x, y) => new GamePerformance(
             x.hiHat + y.hiHat,
             x.crash + y.crash,
             x.snareDrum + y.snareDrum,
@@ -357,13 +344,21 @@ public class MainScript : MonoBehaviour
             x.ride + y.ride
         ));
 
-        averageScores.averageScores(performanceRecord.Count);
+        averageScores.averageScores(queue.Count);
 
         string tag = averageScores.getMaxScore();
-
         Debug.Log(tag);
+        foreach(KeyValuePair<int, GameLevel> kvp in levels)
+        {
+            GameLevel level = kvp.Value;
 
-        return 3;
+            if(Array.IndexOf(level.GetTags(), tag) > -1)
+            {
+                return level;
+            }
+        }
+
+        return null;
     }
 
     private void createNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
@@ -412,7 +407,7 @@ public class MainScript : MonoBehaviour
     private void savePerformanceData()
     {
         getGhostHitScores();
-        performanceRecord.Add(DateTime.Now, currentPerformance);
+        performanceRecord.Add(currentPerformance);
 
         BinaryFormatter binaryFormatter = new BinaryFormatter();
 
@@ -422,7 +417,7 @@ public class MainScript : MonoBehaviour
         }
     }
 
-    private static SortedList<DateTime, GamePerformance> loadPerformanceData(string path)
+    private static PerformanceRecord loadPerformanceData(string path)
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
 
@@ -430,13 +425,13 @@ public class MainScript : MonoBehaviour
         {
             using (FileStream fileStream = File.Open(path, FileMode.Open))
             {
-                return (SortedList<DateTime, GamePerformance>)binaryFormatter.Deserialize(fileStream);
+                return (PerformanceRecord)binaryFormatter.Deserialize(fileStream);
             }
         } catch (FileNotFoundException e)
         {
             Debug.Log("Error: File not found, creating new load file.");
 
-            return new SortedList<DateTime, GamePerformance>() { };
+            return new PerformanceRecord();
         }
 
     }

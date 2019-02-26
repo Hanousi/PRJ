@@ -349,6 +349,7 @@
     <Compile Include="Assets\Scripts\MainScript.cs" />
     <Compile Include="Assets\Scripts\NoteCatcherController.cs" />
     <Compile Include="Assets\Scripts\NoteController.cs" />
+    <Compile Include="Assets\Scripts\PerformanceRecord.cs" />
     <None Include="Assets\Oculus\Avatar\Content\Materials\AvatarMaterialStateShader.cginc" />
     <None Include="Assets\Oculus\Avatar\Resources\Materials\Version1.5\Avatar_PC_SingleComponent.shader" />
     <None Include="Assets\Oculus\SampleFramework\Core\CustomHands\Materials\Hands_DiffBump.shader" />
