@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NoteController : MonoBehaviour {
 
+    private Transform target;
+    private float speed;
+
 	// Use this for initialization
 	void Start () {
 
@@ -11,25 +14,16 @@ public class NoteController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(Vector3.forward * (-Time.deltaTime * 2));
+        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * speed);
+    }
 
-        switch (gameObject.tag)
-        {
-            case "TomNote":
-                transform.Translate(Vector3.down * Time.deltaTime / 5.75f);
-                break;
-            case "CymbalNote":
-                transform.Translate(Vector3.right * Time.deltaTime / 9.5f);
-                break;
-            case "RideNote":
-                transform.Translate(Vector3.left * Time.deltaTime / 9.5f);
-                break;
-        }
+    public void SetTarget(Transform target)
+    {
+        this.target = target;
+    }
 
-        //if(gameObject.tag == "TomNote") {
-        //    transform.Translate(Vector3.down * Time.deltaTime / 5.75f);
-        //} else if(gameObject.tag == "CymbalNote") {
-        //    transform.Translate(Vector3.right * Time.deltaTime / 9.5f);
-        //}
+    public void SetSpeed(float speed)
+    {
+        this.speed = speed;
     }
 }

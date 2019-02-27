@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class DrumstickController : MonoBehaviour {
 
+    public delegate void NoteMiss(string noteName);
+    public static event NoteMiss OnMiss;
+
     // Use this for initialization
     void Start () {
          
@@ -18,11 +21,16 @@ public class DrumstickController : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         AudioSource audioData = other.GetComponent<AudioSource>();
         audioData.Play(0);
+
         DrumController drumController = other.GetComponent<DrumController>();
         GameObject note = drumController.note;
         if(note)
         {
             Destroy(note);
+        }
+        else
+        {
+            OnMiss(other.tag);
         }
     }
 }
