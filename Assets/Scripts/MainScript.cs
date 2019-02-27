@@ -210,15 +210,15 @@ public class MainScript : MonoBehaviour
             23,
             new string[] { });
 
-        GameLevel game3 = new GameLevel(3, new float[][] { new float[] { 1, 1.5f, 2, 2.5f, 3, 3.5f, 4, 4.5f, 5, 5.5f, 6, 6.5f },
+        GameLevel game3 = new GameLevel(3, new float[][] { new float[] { },
             new float[] { },
-            new float[] { 2, 4, 6 },
-            new float[] { },
+            new float[] { 3, 7, 11, 15, 19, 23, 27 },
+            new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 },
             new float[] { },
             new float[] { },
             new float[] { }},
-            6,
-            new string[] { "hiHat", "snareDrum"});
+            20,
+            new string[] { "hiHat", "snareDrum" });
 
         GameLevel game4 = new GameLevel(4, new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25.5f, 26.5f },
             new float[] { },
@@ -230,10 +230,21 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "hiHat", "snareDrum", "floorTom" });
 
+        GameLevel game5 = new GameLevel(5, new float[][] { new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 },
+            new float[] { },
+            new float[] { },
+            new float[] { } },
+            20,
+            new string[] { "hiHat", "snareDrum", "floorTom" });
+
         levels.Add(1, game1);
         levels.Add(2, game2);
         levels.Add(3, game3);
         levels.Add(4, game4);
+        levels.Add(5, game5);
     }
 
     void StartGame(int level)
@@ -247,6 +258,7 @@ public class MainScript : MonoBehaviour
         for(int i = 0; i < notePositions.Length; i++)
         {
             float[] drumNotePositions = notePositions[i];
+            //private void createNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
 
             switch (i)
             {
@@ -318,12 +330,15 @@ public class MainScript : MonoBehaviour
                 if (tagList == "")
                 {
                     tagList = tags[0];
+                } else
+                {
+                    tagList = tagList + "and " + tags[tags.Length - 1];
                 }
 
                 Debug.Log(levelNumber);
 
-                DebugUIBuilder.instance.AddLabel("AI Suggesstion:");
-                DebugUIBuilder.instance.AddLabel("It looks like your are struggling with playing the " + tagList + ". Try this exercise out:");
+                DebugUIBuilder.instance.AddLabel("AI Suggesstion:", DebugUIBuilder.DEBUG_PANE_RIGHT);
+                DebugUIBuilder.instance.AddLabel("It looks like your are struggling with playing the " + tagList + ". Try this exercise out:", DebugUIBuilder.DEBUG_PANE_RIGHT);
 
                 DebugUIBuilder.instance.AddButton("Level " + levelNumber, delegate () { StartGame(levelNumber); }, DebugUIBuilder.DEBUG_PANE_RIGHT);
             }
