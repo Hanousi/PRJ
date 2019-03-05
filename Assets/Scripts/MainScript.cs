@@ -31,6 +31,7 @@ public class MainScript : MonoBehaviour
     private Dictionary<int, GameLevel> levels;
     private GamePerformance currentPerformance;
     private PerformanceRecord performanceRecord;
+    private List<AILevelTemplate> levelTemplates;
     private Dictionary<string, int> ghostHits = new Dictionary<string, int>()
     {
         { "HiHat", 0 },
@@ -56,7 +57,7 @@ public class MainScript : MonoBehaviour
 
         Debug.Log(performanceRecord.GetQueue().Count);
 
-        //StartGame(3);
+        StartGame(3);
         buildMainMenu();
 
         inMenu = false;
@@ -240,11 +241,19 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "hiHat", "snareDrum", "floorTom" });
 
+        AILevelTemplate template1 = new AILevelTemplate(new float[][] { Enumerable.Range(1, 28).Cast<float>().ToArray(), new float[] { 3, 7, 11, 15, 19, 23, 27 } }, 20);
+        AILevelTemplate template2 = new AILevelTemplate(new float[][] {
+            new float[] { 1, 2.5f, 4, 6.5f, 8, 9, 10.5f, 12, 14.5f, 16, 17, 18.5f, 20, 22.5f, 24 },
+            new float[] { 3, 7, 11, 15, 19, 23 }
+        }, 20);
+
         levels.Add(1, game1);
         levels.Add(2, game2);
         levels.Add(3, game3);
         levels.Add(4, game4);
         levels.Add(5, game5);
+
+        levelTemplates.Add(template1);
     }
 
     void StartGame(int level)
@@ -254,11 +263,10 @@ public class MainScript : MonoBehaviour
         currentLevel = notePositions;
         currentPerformance = new GamePerformance(0, 0, 0, 0, 0, 0, 0);
 
-        DebugUIBuilder.instance.Hide();
+        //DebugUIBuilder.instance.Hide();
         for(int i = 0; i < notePositions.Length; i++)
         {
             float[] drumNotePositions = notePositions[i];
-            //private void createNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
 
             switch (i)
             {
@@ -320,27 +328,19 @@ public class MainScript : MonoBehaviour
             {
                 int levelNumber = aiRecommendation.GetLevelNumber();
                 string[] tags = aiRecommendation.GetTags();
-                string tagList = "";
-
-                for (int i = 0; i < tags.Length - 1; i++)
-                {
-                    tagList = tagList + tags[i] + ", ";
-                }
-
-                if (tagList == "")
-                {
-                    tagList = tags[0];
-                } else
-                {
-                    tagList = tagList + "and " + tags[tags.Length - 1];
-                }
+                string aiText = getAIText(tags);
 
                 Debug.Log(levelNumber);
 
                 DebugUIBuilder.instance.AddLabel("AI Suggesstion:", DebugUIBuilder.DEBUG_PANE_RIGHT);
-                DebugUIBuilder.instance.AddLabel("It looks like your are struggling with playing the " + tagList + ". Try this exercise out:", DebugUIBuilder.DEBUG_PANE_RIGHT);
-
+                DebugUIBuilder.instance.AddLabel("It looks like your are struggling with playing the " + aiText + ". Try this exercise out:", DebugUIBuilder.DEBUG_PANE_RIGHT);
                 DebugUIBuilder.instance.AddButton("Level " + levelNumber, delegate () { StartGame(levelNumber); }, DebugUIBuilder.DEBUG_PANE_RIGHT);
+
+                DebugUIBuilder.instance.AddDivider();
+
+                DebugUIBuilder.instance.AddLabel("AI Level:", DebugUIBuilder.DEBUG_PANE_RIGHT);
+                DebugUIBuilder.instance.AddLabel("Have a go at this AI developed level to help improve your more weaker skillset!", DebugUIBuilder.DEBUG_PANE_RIGHT);
+                DebugUIBuilder.instance.AddButton("Level AI", delegate () { StartGame(-1); }, DebugUIBuilder.DEBUG_PANE_RIGHT);
             }
         }
     }
@@ -363,7 +363,9 @@ public class MainScript : MonoBehaviour
 
         string tag = averageScores.getMaxScore();
         Debug.Log(tag);
-        foreach(KeyValuePair<int, GameLevel> kvp in levels)
+        createAILevel(tag);
+
+        foreach (KeyValuePair<int, GameLevel> kvp in levels)
         {
             GameLevel level = kvp.Value;
 
@@ -374,6 +376,30 @@ public class MainScript : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void createAILevel(string tag)
+    {
+        System.Random rand = new System.Random();
+        int weakDrumIndex = Constants.drumKey(tag);
+
+        List<int> numbers = Enumerable.Range(0, 7).Where(u => u != weakDrumIndex).ToList();
+
+        AILevelTemplate template = levelTemplates[rand.Next(levelTemplates.Count)];
+        float[][] templatePositions = template.GetNoteTemplates();
+
+        float[][] notePositions = new float[][] { };
+        notePositions[weakDrumIndex] = templatePositions[0];
+
+        for(int i = 0; i < templatePositions.Length; i++)
+        {
+            int drumCompanion = numbers[rand.Next(numbers.Count + 1)];
+            numbers.Remove(drumCompanion);
+            notePositions[drumCompanion] = templatePositions[i];
+        }
+
+        GameLevel aiLevel = new GameLevel(-1, notePositions, template.GetDuration(), new string[] { });
+        levels.Add(-1, aiLevel);
     }
 
     private void createNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
@@ -475,6 +501,25 @@ public class MainScript : MonoBehaviour
         foreach (string key in keys)
         {
             ghostHits[key] = 0;
+        }
+    }
+
+    private string getAIText(string[] tags)
+    {
+        string tagList = "";
+
+        for (int i = 0; i < tags.Length - 1; i++)
+        {
+            tagList = tagList + tags[i] + ", ";
+        }
+
+        if (tagList == "")
+        {
+            return tags[0];
+        }
+        else
+        {
+            return tagList + "and " + tags[tags.Length - 1];
         }
     }
 
