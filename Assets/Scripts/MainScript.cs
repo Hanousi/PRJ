@@ -10,12 +10,25 @@ using System.Text.RegularExpressions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
 
-// Show off all the Debug UI components.
+/// <summary>
+/// Class holds all the commands and properties required to run the application in it's main thread.
+/// Attached to the MainScript GameObject in the Main scene, the script's biggest reposibilities revolve around
+/// game level creation and UI managment as well as taking advantage of other helper classes to achieve the hueristic based AI.
+/// </summary>
 public class MainScript : MonoBehaviour
 {
     public GameObject gameAssets;
     public GameObject noteCatcher;
+    /// <summary>
+    /// These variables are used to handle the canvasWithDebug object provided with the Oculus integration package in a manner
+    /// which allows it to tear down and create multiple UI's as the user navigates through the application.
+    /// </summary>
+    private GameObject currentUI;
     public GameObject canvasWithDebug;
+    /// <summary>
+    /// Transform objects attached in the Unity UI to be able to generate note objects with the correct
+    /// colour and positioning dynamically
+    /// </summary>
     public Transform hiHatNote;
     public Transform crashNote;
     public Transform snareDrumNote;
@@ -24,14 +37,23 @@ public class MainScript : MonoBehaviour
     public Transform floorTomNote;
     public Transform rideNote;
     private string dataPath;
-    private GameObject currentUI;
+    /// <summary>
+    /// Variables used only by the Update function to effectively set a timer to handle when a specific game level finishes.
+    /// </summary>
     private bool inGame = false;
     private float timeLeft = -1;
     private float[][] currentLevel;
+    /// <summary>
+    /// Collections used to store the levels the game has available as well as the rhythm templates the AI is able to choose from.
+    /// </summary>
     private Dictionary<int, GameLevel> levels;
+    private List<AILevelTemplate> levelTemplates;
+    /// <summary>
+    /// Instances of helper classes used to track the performance of the user on previous exercises they have played for both the
+    /// saving of data and usage by the AI.
+    /// </summary>
     private GamePerformance currentPerformance;
     private PerformanceRecord performanceRecord;
-    private List<AILevelTemplate> levelTemplates;
     private Dictionary<string, int> ghostHits = new Dictionary<string, int>()
     {
         { "HiHat", 0 },
@@ -44,18 +66,16 @@ public class MainScript : MonoBehaviour
     };
     bool inMenu;
 
+    /// <summary>
+    /// Start function called as soon as the application is started up. Mainly focuses on the load of data, more specifically
+    /// performance data from previous sessions of using the application as well as level creation for both the exercises and
+    /// AI level templates.
+    /// </summary>
     void Start()
     {
         LevelSetUp();
         dataPath = Path.Combine(Application.persistentDataPath, "PerformanceData.dat");
         performanceRecord = loadPerformanceData(dataPath);
-
-        foreach (GamePerformance gp in performanceRecord.GetQueue())
-        {
-            Debug.Log(gp.ToString());
-        }
-
-        Debug.Log(performanceRecord.GetQueue().Count);
 
         StartGame(3);
         buildMainMenu();
@@ -63,6 +83,10 @@ public class MainScript : MonoBehaviour
         inMenu = false;
     }
 
+    /// <summary>
+    /// Update function called with every frame produced in the application. Used to check for inputs from
+    /// the user as well as handling actions required for when a exercise has finished.
+    /// </summary>
     void Update()
     {
         if (OVRInput.GetDown(OVRInput.Button.Two) || OVRInput.GetDown(OVRInput.Button.Start))
@@ -84,15 +108,12 @@ public class MainScript : MonoBehaviour
             if(timeLeft < 0)
             {
                 inGame = false;
-                GamePerformance gamePerformance = new GamePerformance(0, 0, 0, 0, 0, 0, 0);
 
                 NoteCatcherController noteCatcherController = noteCatcher.GetComponent<NoteCatcherController>();
                 Dictionary<string, string> results = getGameResults(noteCatcherController.missedNotes);
 
                 savePerformanceData();
-
-                Destroy(currentUI);
-                Destroy(GameObject.Find("UIHelpers(Clone)"));
+                DestroyCurrentUI();
 
                 currentUI = Instantiate(canvasWithDebug, new Vector3(0.32f, -0.46f, 2.43f), Quaternion.identity);
 
@@ -117,11 +138,19 @@ public class MainScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Function called when the object becomes enabled and active. Used in this script to attach the Add miss function
+    /// to the OnMiss event found on the Drumstick controller script.
+    /// </summary>
     void OnEnable()
     {
         DrumstickController.OnMiss += AddMiss;    
     }
 
+    /// <summary>
+    /// Function called when the object becomes disabled. This is done so that the AddMiss function is no longer called
+    /// when the event is triggered.
+    /// </summary>
     void OnDisable()
     {
         DrumstickController.OnMiss -= AddMiss;    
@@ -132,10 +161,21 @@ public class MainScript : MonoBehaviour
         ghostHits[noteName] = ghostHits[noteName] + 1;
     }
 
-    private void enterSandBoxMode()
+    private void DestroyCurrentUI()
     {
         Destroy(currentUI);
+        // UIHelper Instance generated by the previous canvasWithDebug UI must also be deleted so that the laserPointer on the
+        // new UI is still functional. 
         Destroy(GameObject.Find("UIHelpers(Clone)"));
+    }
+
+    /// <summary>
+    /// When an exercise is finished the application always returns back to sandbox mode. Function handles the UI and scene changes
+    /// required to achieve.
+    /// </summary>
+    private void enterSandBoxMode()
+    {
+        DestroyCurrentUI();
         buildMainMenu();
 
         gameAssets.SetActive(false);
@@ -143,6 +183,15 @@ public class MainScript : MonoBehaviour
         inMenu = false;
     }
 
+    /// <summary>
+    /// During an exercise the notes the user doesn't manage to hit are caught by the noteCatcherController instance.
+    /// Using the data collected by that class the function calculates the hitrate achieved by the user on every drum
+    /// in the exercise in an attempt to find the drum with the lowest hitrate.
+    /// </summary>
+    /// <param name="missedNotes">Dictionary with a string key representing the name of the drum and a int value 
+    /// recording the notes captured that belonged to that drum</param>
+    /// <returns>Dictionary with a string key representing the name of the drum note missed and a string value of the
+    /// percentage hitrate for the drum in a prettyfied format for UI usage</returns>
     private Dictionary<string, string> getGameResults(Dictionary<string, int> missedNotes)
     {
         Dictionary<string, string> results = new Dictionary<string, string>();
@@ -185,6 +234,9 @@ public class MainScript : MonoBehaviour
         return results;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void LevelSetUp()
     {
         levels = new Dictionary<int, GameLevel>();
@@ -254,8 +306,13 @@ public class MainScript : MonoBehaviour
         levels.Add(5, game5);
 
         levelTemplates.Add(template1);
+        levelTemplates.Add(template2);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="level"></param>
     void StartGame(int level)
     {
         GameLevel gameLevel = levels[level];
@@ -308,6 +365,9 @@ public class MainScript : MonoBehaviour
         inMenu = false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void buildMainMenu()
     {
         currentUI = Instantiate(canvasWithDebug, new Vector3(0.32f, -0.46f, 2.43f), Quaternion.identity);
@@ -330,8 +390,6 @@ public class MainScript : MonoBehaviour
                 string[] tags = aiRecommendation.GetTags();
                 string aiText = getAIText(tags);
 
-                Debug.Log(levelNumber);
-
                 DebugUIBuilder.instance.AddLabel("AI Suggesstion:", DebugUIBuilder.DEBUG_PANE_RIGHT);
                 DebugUIBuilder.instance.AddLabel("It looks like your are struggling with playing the " + aiText + ". Try this exercise out:", DebugUIBuilder.DEBUG_PANE_RIGHT);
                 DebugUIBuilder.instance.AddButton("Level " + levelNumber, delegate () { StartGame(levelNumber); }, DebugUIBuilder.DEBUG_PANE_RIGHT);
@@ -339,12 +397,16 @@ public class MainScript : MonoBehaviour
                 DebugUIBuilder.instance.AddDivider();
 
                 DebugUIBuilder.instance.AddLabel("AI Level:", DebugUIBuilder.DEBUG_PANE_RIGHT);
-                DebugUIBuilder.instance.AddLabel("Have a go at this AI developed level to help improve your more weaker skillset!", DebugUIBuilder.DEBUG_PANE_RIGHT);
+                DebugUIBuilder.instance.AddLabel("Have a go at this AI developed level to help improve your weaker skillset!", DebugUIBuilder.DEBUG_PANE_RIGHT);
                 DebugUIBuilder.instance.AddButton("Level AI", delegate () { StartGame(-1); }, DebugUIBuilder.DEBUG_PANE_RIGHT);
             }
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private GameLevel getRecommendation()
     {
         Queue<GamePerformance> queue = performanceRecord.GetQueue();
@@ -378,6 +440,10 @@ public class MainScript : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tag"></param>
     private void createAILevel(string tag)
     {
         System.Random rand = new System.Random();
@@ -402,6 +468,18 @@ public class MainScript : MonoBehaviour
         levels.Add(-1, aiLevel);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="note"></param>
+    /// <param name="drumNotePositions"></param>
+    /// <param name="x"></param>
+    /// <param name="xOffset"></param>
+    /// <param name="xModifier"></param>
+    /// <param name="y"></param>
+    /// <param name="yOffset"></param>
+    /// <param name="yModifier"></param>
+    /// <param name="zOffset"></param>
     private void createNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
     {
         foreach (float position in drumNotePositions)
@@ -422,6 +500,13 @@ public class MainScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="noteName"></param>
+    /// <param name="totalNotes"></param>
+    /// <param name="missedNotes"></param>
+    /// <param name="results"></param>
     private void getHitRate(string noteName, int totalNotes, Dictionary<string, int> missedNotes, Dictionary<string, string> results)
     {
         if (totalNotes == 0)
@@ -445,6 +530,9 @@ public class MainScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void savePerformanceData()
     {
         getGhostHitScores();
@@ -458,6 +546,11 @@ public class MainScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
     private static PerformanceRecord loadPerformanceData(string path)
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
@@ -477,6 +570,9 @@ public class MainScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void getGhostHitScores()
     {
         foreach(KeyValuePair<string, int> kvp in ghostHits)
@@ -494,6 +590,9 @@ public class MainScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void resetGhostHits()
     {
         List<string> keys = new List<string>(ghostHits.Keys);
@@ -504,6 +603,11 @@ public class MainScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tags"></param>
+    /// <returns></returns>
     private string getAIText(string[] tags)
     {
         string tagList = "";
@@ -523,6 +627,12 @@ public class MainScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="instance"></param>
+    /// <param name="strPropertyName"></param>
+    /// <param name="newValue"></param>
     public static void SetFieldValue(object instance, string strPropertyName, object newValue)
     {  
         Type type = instance.GetType();
@@ -531,6 +641,12 @@ public class MainScript : MonoBehaviour
         fieldInfo.SetValue(instance, newValue);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="instance"></param>
+    /// <param name="strPropertyName"></param>
+    /// <returns></returns>
     public static object GetFieldValue(object instance, string strPropertyName)
     {
         Type type = instance.GetType();
@@ -539,6 +655,11 @@ public class MainScript : MonoBehaviour
         return fieldInfo.GetValue(instance);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="strPropertyName"></param>
+    /// <returns></returns>
     public static object GetConstantField(string strPropertyName)
     {
         Type type = typeof(Constants);
@@ -547,6 +668,11 @@ public class MainScript : MonoBehaviour
         return fieldInfo.GetValue(null);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
     static string LowercaseFirst(string s)
     {
         return char.ToLower(s[0]) + s.Substring(1);
