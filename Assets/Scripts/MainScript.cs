@@ -47,7 +47,7 @@ public class MainScript : MonoBehaviour
     /// Collections used to store the levels the game has available as well as the rhythm templates the AI is able to choose from.
     /// </summary>
     private Dictionary<int, GameLevel> levels;
-    private List<AILevelTemplate> levelTemplates;
+    private List<AILevelTemplate> levelTemplates = new List<AILevelTemplate>() { };
     /// <summary>
     /// Instances of helper classes used to track the performance of the user on previous exercises they have played for both the
     /// saving of data and usage by the AI.
@@ -77,7 +77,7 @@ public class MainScript : MonoBehaviour
         dataPath = Path.Combine(Application.persistentDataPath, "PerformanceData.dat");
         performanceRecord = loadPerformanceData(dataPath);
 
-        StartGame(3);
+        //StartGame(3);
         buildMainMenu();
 
         inMenu = false;
@@ -88,21 +88,22 @@ public class MainScript : MonoBehaviour
     /// the user as well as handling actions required for when a exercise has finished.
     /// </summary>
     void Update()
-    {
-        if (OVRInput.GetDown(OVRInput.Button.Two) || OVRInput.GetDown(OVRInput.Button.Start))
-        {
-            if (inMenu) DebugUIBuilder.instance.Hide();
-            else DebugUIBuilder.instance.Show();
-            inMenu = !inMenu;
-        }
-            
+    {            
         if (OVRInput.GetDown(OVRInput.Button.Four))
         {
             AudioSource kick = GetComponent<AudioSource>();
             kick.Play(0);
         }
 
-        if(inGame)
+        if (OVRInput.GetDown(OVRInput.Button.Two) || OVRInput.GetDown(OVRInput.Button.Start))
+        {
+            Debug.Log("Hani");
+            if (inMenu) DebugUIBuilder.instance.Hide();
+            else DebugUIBuilder.instance.Show();
+            inMenu = !inMenu;
+        }
+
+        if (inGame)
         {
             timeLeft -= Time.deltaTime;
             if(timeLeft < 0)
@@ -264,9 +265,9 @@ public class MainScript : MonoBehaviour
             new string[] { });
 
         GameLevel game3 = new GameLevel(3, new float[][] { new float[] { },
+            new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 },
+            new float[] { 3, 7, 11},
             new float[] { },
-            new float[] { 3, 7, 11, 15, 19, 23, 27 },
-            new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 },
             new float[] { },
             new float[] { },
             new float[] { }},
@@ -285,15 +286,15 @@ public class MainScript : MonoBehaviour
 
         GameLevel game5 = new GameLevel(5, new float[][] { new float[] { },
             new float[] { },
+            new float[] { 3, 7, 11, 15, 19, 23, 27 },
+            new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 },
             new float[] { },
-            new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 },
             new float[] { },
-            new float[] { },
-            new float[] { } },
+            new float[] { }},
             20,
             new string[] { "hiHat", "snareDrum", "floorTom" });
 
-        AILevelTemplate template1 = new AILevelTemplate(new float[][] { Enumerable.Range(1, 28).Cast<float>().ToArray(), new float[] { 3, 7, 11, 15, 19, 23, 27 } }, 20);
+        AILevelTemplate template1 = new AILevelTemplate(new float[][] { Array.ConvertAll(Enumerable.Range(1, 28).ToArray(), x => (float)x), new float[] { 3, 7, 11, 15, 19, 23, 27 } }, 20);
         AILevelTemplate template2 = new AILevelTemplate(new float[][] {
             new float[] { 1, 2.5f, 4, 6.5f, 8, 9, 10.5f, 12, 14.5f, 16, 17, 18.5f, 20, 22.5f, 24 },
             new float[] { 3, 7, 11, 15, 19, 23 }
@@ -320,7 +321,7 @@ public class MainScript : MonoBehaviour
         currentLevel = notePositions;
         currentPerformance = new GamePerformance(0, 0, 0, 0, 0, 0, 0);
 
-        //DebugUIBuilder.instance.Hide();
+        DebugUIBuilder.instance.Hide();
         for(int i = 0; i < notePositions.Length; i++)
         {
             float[] drumNotePositions = notePositions[i];
@@ -454,18 +455,31 @@ public class MainScript : MonoBehaviour
         AILevelTemplate template = levelTemplates[rand.Next(levelTemplates.Count)];
         float[][] templatePositions = template.GetNoteTemplates();
 
-        float[][] notePositions = new float[][] { };
+        float[][] notePositions = new float[][] { new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { }
+        };
+
         notePositions[weakDrumIndex] = templatePositions[0];
 
-        for(int i = 0; i < templatePositions.Length; i++)
+        for (int i = 1; i < templatePositions.Length; i++)
         {
-            int drumCompanion = numbers[rand.Next(numbers.Count + 1)];
+            int drumCompanion = numbers[rand.Next(numbers.Count)];
             numbers.Remove(drumCompanion);
             notePositions[drumCompanion] = templatePositions[i];
         }
 
+        foreach (float[] a in notePositions)
+        {
+            Debug.Log(a);
+        }
+
         GameLevel aiLevel = new GameLevel(-1, notePositions, template.GetDuration(), new string[] { });
-        levels.Add(-1, aiLevel);
+        levels[-1] = aiLevel;
     }
 
     /// <summary>
