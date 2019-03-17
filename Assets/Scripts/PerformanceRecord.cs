@@ -15,7 +15,7 @@ public class PerformanceRecord {
 
     public void Add(GamePerformance performance)
     {
-        if(record.Count == 5)
+        if(record.Count == Constants.PERFORMANCERECORDSIZE)
         {
             record.Dequeue();
         }

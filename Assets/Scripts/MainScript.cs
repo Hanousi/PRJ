@@ -75,10 +75,10 @@ public class MainScript : MonoBehaviour
     {
         LevelSetUp();
         dataPath = Path.Combine(Application.persistentDataPath, "PerformanceData.dat");
-        performanceRecord = loadPerformanceData(dataPath);
+        performanceRecord = LoadPerformanceData(dataPath);
 
         //StartGame(3);
-        buildMainMenu();
+        BuildMainMenu();
 
         inMenu = false;
     }
@@ -111,9 +111,9 @@ public class MainScript : MonoBehaviour
                 inGame = false;
 
                 NoteCatcherController noteCatcherController = noteCatcher.GetComponent<NoteCatcherController>();
-                Dictionary<string, string> results = getGameResults(noteCatcherController.missedNotes);
+                Dictionary<string, string> results = GetGameResults(noteCatcherController.missedNotes);
 
-                savePerformanceData();
+                SavePerformanceData();
                 DestroyCurrentUI();
 
                 currentUI = Instantiate(canvasWithDebug, new Vector3(0.32f, -0.46f, 2.43f), Quaternion.identity);
@@ -130,10 +130,10 @@ public class MainScript : MonoBehaviour
                     DebugUIBuilder.instance.AddLabel(kvp.Key + ": " + kvp.Value, DebugUIBuilder.DEBUG_PANE_RIGHT);
                 }
 
-                DebugUIBuilder.instance.AddButton("Close", enterSandBoxMode);
+                DebugUIBuilder.instance.AddButton("Close", EnterSandBoxMode);
                 DebugUIBuilder.instance.Show();
 
-                resetGhostHits();
+                ResetGhostHits();
                 noteCatcherController.resetResults();
             }
         }
@@ -174,10 +174,10 @@ public class MainScript : MonoBehaviour
     /// When an exercise is finished the application always returns back to sandbox mode. Function handles the UI and scene changes
     /// required to achieve.
     /// </summary>
-    private void enterSandBoxMode()
+    private void EnterSandBoxMode()
     {
         DestroyCurrentUI();
-        buildMainMenu();
+        BuildMainMenu();
 
         gameAssets.SetActive(false);
         DebugUIBuilder.instance.Hide();
@@ -193,7 +193,7 @@ public class MainScript : MonoBehaviour
     /// recording the notes captured that belonged to that drum</param>
     /// <returns>Dictionary with a string key representing the name of the drum note missed and a string value of the
     /// percentage hitrate for the drum in a prettyfied format for UI usage</returns>
-    private Dictionary<string, string> getGameResults(Dictionary<string, int> missedNotes)
+    private Dictionary<string, string> GetGameResults(Dictionary<string, int> missedNotes)
     {
         Dictionary<string, string> results = new Dictionary<string, string>();
 
@@ -202,41 +202,43 @@ public class MainScript : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    getHitRate("HiHatNote", currentLevel[i].Length, missedNotes, results);
+                    GetHitRate("HiHatNote", currentLevel[i].Length, missedNotes, results);
                     
                     break;
                 case 1:
-                    getHitRate("CrashNote", currentLevel[i].Length, missedNotes, results);
+                    GetHitRate("CrashNote", currentLevel[i].Length, missedNotes, results);
 
                     break;
                 case 2:
-                    getHitRate("SnareDrumNote", currentLevel[i].Length, missedNotes, results);
+                    GetHitRate("SnareDrumNote", currentLevel[i].Length, missedNotes, results);
 
                     break;
                 case 3:
-                    getHitRate("HiTomNote", currentLevel[i].Length, missedNotes, results);
+                    GetHitRate("HiTomNote", currentLevel[i].Length, missedNotes, results);
 
                     break;
                 case 4:
-                    getHitRate("MidTomNote", currentLevel[i].Length, missedNotes, results);
+                    GetHitRate("MidTomNote", currentLevel[i].Length, missedNotes, results);
 
                     break;
                 case 5:
-                    getHitRate("FloorTomNote", currentLevel[i].Length, missedNotes, results);
+                    GetHitRate("FloorTomNote", currentLevel[i].Length, missedNotes, results);
 
                     break;
                 case 6:
-                    getHitRate("RideNote", currentLevel[i].Length, missedNotes, results);
+                    GetHitRate("RideNote", currentLevel[i].Length, missedNotes, results);
 
                     break;
             }
         }
 
+        GetGhostHitHeuristics();
+
         return results;
     }
 
     /// <summary>
-    /// 
+    /// Function populates collection variables required to populate the game scene when the exercises are ran.
     /// </summary>
     private void LevelSetUp()
     {
@@ -311,9 +313,11 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Handles the scene for when a exercise is initiated by setting the exercise timer, placing note gameobjects in the correct location
+    /// and preparing the objects required to capture the user performance.
     /// </summary>
-    /// <param name="level"></param>
+    /// <param name="level">The exercise level number that is selected by the user. Used as the key to retrieve the Gamelevel object for 
+    /// the note positions</param>
     void StartGame(int level)
     {
         GameLevel gameLevel = levels[level];
@@ -329,31 +333,31 @@ public class MainScript : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    createNote(hiHatNote, drumNotePositions, 0, -0.59f, -0.106f, 0.8f, 0, 0, 0);
+                    CreateNote(hiHatNote, drumNotePositions, 0, -0.59f, -0.106f, 0.8f, 0, 0, 0);
 
                     break;
                 case 1:
-                    createNote(crashNote, drumNotePositions, 0, -0.18f, -0.106f, 1.12f, 0, 0, 0.92f);
+                    CreateNote(crashNote, drumNotePositions, 0, -0.18f, -0.106f, 1.12f, 0, 0, 0.92f);
 
                     break;
                 case 2:
-                    createNote(snareDrumNote, drumNotePositions, -0.07f, 0, 0, 0.6f, 0, 0, 0.28f);
+                    CreateNote(snareDrumNote, drumNotePositions, -0.07f, 0, 0, 0.6f, 0, 0, 0.28f);
 
                     break;
                 case 3:
-                    createNote(hiTomNote, drumNotePositions, 0.05f, 0, 0, 0, 0.85f, 0.18f, 0.95f);
+                    CreateNote(hiTomNote, drumNotePositions, 0.05f, 0, 0, 0, 0.85f, 0.18f, 0.95f);
 
                     break;
                 case 4:
-                    createNote(midTomNote, drumNotePositions, 0.47f, 0, 0, 0, 0.85f, 0.18f, 0.95f);
+                    CreateNote(midTomNote, drumNotePositions, 0.47f, 0, 0, 0, 0.85f, 0.18f, 0.95f);
 
                     break;
                 case 5:
-                    createNote(floorTomNote, drumNotePositions, 0.63f, 0, 0, 0.6f, 0, 0, 0.28f);
+                    CreateNote(floorTomNote, drumNotePositions, 0.63f, 0, 0, 0.6f, 0, 0, 0.28f);
 
                     break;
                 case 6:
-                    createNote(rideNote, drumNotePositions, 0, 0.87f, 0.106f, 1, 0, 0, 0.6f);
+                    CreateNote(rideNote, drumNotePositions, 0, 0.87f, 0.106f, 1, 0, 0, 0.6f);
 
                     break;
             }
@@ -366,10 +370,7 @@ public class MainScript : MonoBehaviour
         inMenu = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private void buildMainMenu()
+    private void BuildMainMenu()
     {
         currentUI = Instantiate(canvasWithDebug, new Vector3(0.32f, -0.46f, 2.43f), Quaternion.identity);
 
@@ -381,9 +382,9 @@ public class MainScript : MonoBehaviour
         DebugUIBuilder.instance.AddButton("Level 5", delegate () { StartGame(5); });
         DebugUIBuilder.instance.AddDivider();
 
-        if (performanceRecord.GetQueue().Count == 5)
+        if (performanceRecord.GetQueue().Count == Constants.PERFORMANCERECORDSIZE)
         {
-            GameLevel aiRecommendation = getRecommendation();
+            GameLevel aiRecommendation = GetRecommendation();
 
             if (aiRecommendation != null)
             {
@@ -405,10 +406,10 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Calculates the user's least performant drum and then selects a GameLevel which includes that drum
     /// </summary>
-    /// <returns></returns>
-    private GameLevel getRecommendation()
+    /// <returns>GameLevel which involves that drum which is made as a suggestion to the user in the main menu</returns>
+    private GameLevel GetRecommendation()
     {
         Queue<GamePerformance> queue = performanceRecord.GetQueue();
 
@@ -426,7 +427,7 @@ public class MainScript : MonoBehaviour
 
         string tag = averageScores.getMaxScore();
         Debug.Log(tag);
-        createAILevel(tag);
+        CreateAILevel(tag);
 
         foreach (KeyValuePair<int, GameLevel> kvp in levels)
         {
@@ -442,10 +443,12 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Builds a dynamic exercise level around the drum that is selected in the AIRecommendation function.
+    /// A exercise template is chosen at random and accompanying drums to the template are also selected at random
+    /// around the focus of the exercise being the drum provided as a parameter.
     /// </summary>
-    /// <param name="tag"></param>
-    private void createAILevel(string tag)
+    /// <param name="tag">The drum name of the weakest drum selected by the AIRecommendation function</param>
+    private void CreateAILevel(string tag)
     {
         System.Random rand = new System.Random();
         int weakDrumIndex = Constants.drumKey(tag);
@@ -473,32 +476,40 @@ public class MainScript : MonoBehaviour
             notePositions[drumCompanion] = templatePositions[i];
         }
 
-        foreach (float[] a in notePositions)
-        {
-            Debug.Log(a);
-        }
-
         GameLevel aiLevel = new GameLevel(-1, notePositions, template.GetDuration(), new string[] { });
         levels[-1] = aiLevel;
     }
 
     /// <summary>
-    /// 
+    /// Instantiates all the notes in the scene that belong to one drum. Each set of drum notes requires a specific set of
+    /// co-ordinates that it needs to follow due to the layout of the game board in the scene. Some notes will just move forward,
+    /// others slightly to the right along the y axis and some move down the z axis. The set of parameters make sure that the 
+    /// notes are aligned correctly in the scene.
     /// </summary>
-    /// <param name="note"></param>
-    /// <param name="drumNotePositions"></param>
-    /// <param name="x"></param>
-    /// <param name="xOffset"></param>
-    /// <param name="xModifier"></param>
-    /// <param name="y"></param>
-    /// <param name="yOffset"></param>
-    /// <param name="yModifier"></param>
-    /// <param name="zOffset"></param>
-    private void createNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
+    /// <param name="note">Transform object the scene will create. Linked to the script through the Unity UI</param>
+    /// <param name="drumNotePositions">Float array containing the positions a specific note needs to be. In other words,
+    /// these set numbers represent which beat in the song the note is present. e.i Bar 1 beat 3 = 3, Bar 4 beat 2 = 18</param>
+    /// <param name="x">The position on the x axis the note needs to be instantied. If set to 0, the note must therefore
+    /// move along this axis and the units provided by xOffset and xModifier are used instead.</param>
+    /// <param name="xOffset">How far away from the scene's origin the notes need to be instantiated along the x axis</param>
+    /// <param name="xModifier">The degree of change on this axis that must be reflected on the notes position depended on
+    /// how far away it is from the origin.</param>
+    /// <param name="y">The position on the y axis the note needs to be instantied. If set to 0, the note must therefore
+    /// move along this axis and the units provided by yOffset and yModifier are used instead.</param>
+    /// <param name="yOffset">How far away from the scene's origin the notes need to be instantiated along the y axis</param>
+    /// <param name="yModifier">The degree of change on this axis that must be reflected on the notes position depended on
+    /// how far away it is from the origin.</param>
+    /// <param name="zOffset">How far away from the scene's origin the notes need to be instantiated along the z axis</param>
+    private void CreateNote(Transform note, float[] drumNotePositions, float x, float xOffset, float xModifier, float y, float yOffset, float yModifier, float zOffset)
     {
         foreach (float position in drumNotePositions)
         {
             Transform gameObject = Instantiate(note, new Vector3(
+                /* 
+                 * If x or y is set to 0 then the position along this axis is not constant so instead the position offset and modifier
+                 * are used instead. These parameters can be thought of as the x = mc + z linear line function where m is the xModifier
+                 * and z is the xOffset. 
+                 */
                 x == 0 ? (float)(xOffset + (position * xModifier)) : x,
                 y == 0 ? (float)(yOffset + (position * yModifier)) : y,
                 (float)((position * 2) + zOffset)
@@ -507,7 +518,7 @@ public class MainScript : MonoBehaviour
             NoteController noteController = gameObject.GetComponent<NoteController>();
             string drumName = Regex.Split(note.name, "Note")[0];
             string targetName =  drumName + "Target";
-            string speedName = drumName + "Speed";
+            string speedName = (drumName + "Speed").ToUpper();
 
             noteController.SetTarget(GameObject.Find(targetName).transform);
             noteController.SetSpeed((float)GetConstantField(speedName));
@@ -515,13 +526,14 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Calculates the hitrate from the previous exercise for a given drum. Done by comparing the amount of notes present
+    /// in the note positions array with the sum of numbers caught via the AddMiss event function.
     /// </summary>
-    /// <param name="noteName"></param>
-    /// <param name="totalNotes"></param>
-    /// <param name="missedNotes"></param>
-    /// <param name="results"></param>
-    private void getHitRate(string noteName, int totalNotes, Dictionary<string, int> missedNotes, Dictionary<string, string> results)
+    /// <param name="noteName">Name of the drum the hit rate is being calculated for</param>
+    /// <param name="totalNotes">Number of notes that were present from the previous exercise</param>
+    /// <param name="missedNotes">The collection which tracks the notes missed via the AddMiss event</param>
+    /// <param name="results">Dictionary which contains every drum in the exercise as well as the prettified hit rate</param>
+    private void GetHitRate(string noteName, int totalNotes, Dictionary<string, int> missedNotes, Dictionary<string, string> results)
     {
         if (totalNotes == 0)
         {
@@ -532,12 +544,12 @@ public class MainScript : MonoBehaviour
             double hitRate = (totalNotes - missedNotes[noteName]) / (double)totalNotes;
             string drumName = LowercaseFirst(Regex.Split(noteName, "Note")[0]);
 
-            if (hitRate < 0.7) {
-                SetFieldValue(currentPerformance, drumName, 3);
-            } else if(hitRate < 0.8) {
-                SetFieldValue(currentPerformance, drumName, 2);
-            } else if(hitRate < 0.9) {
-                SetFieldValue(currentPerformance, drumName, 1);
+            if (hitRate < Constants.HITRATEMAXTHRESHOLD) {
+                SetFieldValue(currentPerformance, drumName, Constants.HITRATEMAXHEURISTIC);
+            } else if(hitRate < Constants.HITRATEMIDTHRESHOLD) {
+                SetFieldValue(currentPerformance, drumName, Constants.HITRATEMIDHEURISTIC);
+            } else if(hitRate < Constants.HITRATEMINTHRESHOLD) {
+                SetFieldValue(currentPerformance, drumName, Constants.HITRATEMINHEURISTIC);
             }
 
             results.Add(noteName, (hitRate * 100).ToString("0.##") + "%");
@@ -545,11 +557,11 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Adds the most recent performance object to the record collection, converts to binary and saves it into a
+    /// Persistent .dat file.
     /// </summary>
-    private void savePerformanceData()
+    private void SavePerformanceData()
     {
-        getGhostHitScores();
         performanceRecord.Add(currentPerformance);
 
         BinaryFormatter binaryFormatter = new BinaryFormatter();
@@ -561,11 +573,12 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Attempts to load the Performance record file saved from the previous game. If not found a new Performance record
+    /// collection is created instead.
     /// </summary>
-    /// <param name="path"></param>
-    /// <returns></returns>
-    private static PerformanceRecord loadPerformanceData(string path)
+    /// <param name="path"<>The file path which the persistent data file can be found</param>
+    /// <returns>Returns a populated Performance collection if a file is found, otherwsie a empty one is returned</returns>
+    private static PerformanceRecord LoadPerformanceData(string path)
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
 
@@ -585,29 +598,26 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Converts the hitrates into hueristics which can be reasoned by the AI.
     /// </summary>
-    private void getGhostHitScores()
+    private void GetGhostHitHeuristics()
     {
         foreach(KeyValuePair<string, int> kvp in ghostHits)
         {
             string drumName = LowercaseFirst(Regex.Split(kvp.Key, "Note")[0]);
             float currentScore = (float)GetFieldValue(currentPerformance, drumName);
 
-            if (kvp.Value > 20) {
-                SetFieldValue(currentPerformance, drumName, currentScore + 3);
-            } else if(kvp.Value > 15) {
-                SetFieldValue(currentPerformance, drumName, currentScore + 2);
-            } else if (kvp.Value > 10) {
-                SetFieldValue(currentPerformance, drumName, currentScore + 1);
+            if (kvp.Value > Constants.GHOSTHITMAXTHRESHOLD) {
+                SetFieldValue(currentPerformance, drumName, currentScore + Constants.GHOSTHITMAXHEURISTIC);
+            } else if(kvp.Value > Constants.GHOSTHITMIDTHRESHOLD) {
+                SetFieldValue(currentPerformance, drumName, currentScore + Constants.GHOSTHITMIDHEURISTIC);
+            } else if (kvp.Value > Constants.GHOSTHITMINTHRESHOLD) {
+                SetFieldValue(currentPerformance, drumName, currentScore + Constants.GHOSTHITMINHEURISTIC);
             }
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private void resetGhostHits()
+    private void ResetGhostHits()
     {
         List<string> keys = new List<string>(ghostHits.Keys);
 
@@ -618,10 +628,10 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Helper function which takes the tags from a GameLevel and generates a comprehensible string list
     /// </summary>
-    /// <param name="tags"></param>
-    /// <returns></returns>
+    /// <param name="tags">String array of tags that need to be listed</param>
+    /// <returns>Prettified string of tags in a list</returns>
     private string getAIText(string[] tags)
     {
         string tagList = "";
@@ -642,11 +652,11 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Helper function which allows to change the value of a field in a object at run time
     /// </summary>
-    /// <param name="instance"></param>
-    /// <param name="strPropertyName"></param>
-    /// <param name="newValue"></param>
+    /// <param name="instance">Instance of the object you wish to change the field value of</param>
+    /// <param name="strPropertyName">Name of the field you wish to change</param>
+    /// <param name="newValue">The new value you wish to change the field value to</param>
     public static void SetFieldValue(object instance, string strPropertyName, object newValue)
     {  
         Type type = instance.GetType();
@@ -656,11 +666,11 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Helper function which allows to retrieve the value of a field in a object at run time
     /// </summary>
-    /// <param name="instance"></param>
-    /// <param name="strPropertyName"></param>
-    /// <returns></returns>
+    /// <param name="instance">Instance of the object you wish to retrieve the field value of</param>
+    /// <param name="strPropertyName">Name of the field you wish to query</param>
+    /// <returns>The value that was present in that field property</returns>
     public static object GetFieldValue(object instance, string strPropertyName)
     {
         Type type = instance.GetType();
@@ -670,9 +680,9 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Helper function which allows to retrieve the value of a field in the Constants object at run time
     /// </summary>
-    /// <param name="strPropertyName"></param>
+    /// <param name="strPropertyName">Name of the Constants field you wish to query</param>
     /// <returns></returns>
     public static object GetConstantField(string strPropertyName)
     {
@@ -683,10 +693,10 @@ public class MainScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Helper function which takes a string and changes the first character to a lowercase char
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
+    /// <param name="s">The string you wish to modify</param>
+    /// <returns>Modified string with a lowercase first character</returns>
     static string LowercaseFirst(string s)
     {
         return char.ToLower(s[0]) + s.Substring(1);
