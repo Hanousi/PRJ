@@ -1,0 +1,207 @@
+fileFormatVersion: 2
+guid: ec2d35908c33bfd409ebd97ecfce3700
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: A
+    100002: AText
+    100004: B
+    100006: BText
+    100008: C
+    100010: C2
+    100012: CText
+    100014: CText1
+    100016: Cylinder
+    100018: Cylinder_001
+    100020: D
+    100022: DText
+    100024: E
+    100026: EText
+    100028: F
+    100030: FText
+    100032: G
+    100034: GText
+    100036: Stand1
+    100038: Stand2
+    100040: //RootNode
+    400000: A
+    400002: AText
+    400004: B
+    400006: BText
+    400008: C
+    400010: C2
+    400012: CText
+    400014: CText1
+    400016: Cylinder
+    400018: Cylinder_001
+    400020: D
+    400022: DText
+    400024: E
+    400026: EText
+    400028: F
+    400030: FText
+    400032: G
+    400034: GText
+    400036: Stand1
+    400038: Stand2
+    400040: //RootNode
+    2100000: Material_015
+    2100002: Material_014
+    2100004: Material_020
+    2100006: Material_019
+    2100008: Material_018
+    2100010: Material_017
+    2100012: Material_016
+    2100014: Material_012
+    2100016: Material_010
+    2100018: Material_008
+    2100020: Material_001
+    2100022: Material_004
+    2100024: Material_005
+    2100026: Material_006
+    2100028: Material_007
+    2300000: A
+    2300002: AText
+    2300004: B
+    2300006: BText
+    2300008: C
+    2300010: C2
+    2300012: CText
+    2300014: CText1
+    2300016: Cylinder
+    2300018: Cylinder_001
+    2300020: D
+    2300022: DText
+    2300024: E
+    2300026: EText
+    2300028: F
+    2300030: FText
+    2300032: G
+    2300034: GText
+    2300036: Stand1
+    2300038: Stand2
+    3300000: A
+    3300002: AText
+    3300004: B
+    3300006: BText
+    3300008: C
+    3300010: C2
+    3300012: CText
+    3300014: CText1
+    3300016: Cylinder
+    3300018: Cylinder_001
+    3300020: D
+    3300022: DText
+    3300024: E
+    3300026: EText
+    3300028: F
+    3300030: FText
+    3300032: G
+    3300034: GText
+    3300036: Stand1
+    3300038: Stand2
+    4300000: BText
+    4300002: AText
+    4300004: GText
+    4300006: FText
+    4300008: EText
+    4300010: DText
+    4300012: CText1
+    4300014: CText
+    4300016: Stand2
+    4300018: Stand1
+    4300020: Cylinder_001
+    4300022: Cylinder
+    4300024: C2
+    4300026: B
+    4300028: A
+    4300030: G
+    4300032: F
+    4300034: E
+    4300036: D
+    4300038: C
+    7400000: Default Take
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
