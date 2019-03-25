@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Helper class which encapsulates the queue class so that when the Add function is called
+/// and the size limit of the queue is reached, the oldest entry is dequeued and new one is
+/// queued.
+/// </summary>
 [Serializable]
 public class PerformanceRecord {
 

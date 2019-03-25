@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script component attached to the beaters of the instrument. 
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class DrumstickController : MonoBehaviour {
 
@@ -18,6 +21,12 @@ public class DrumstickController : MonoBehaviour {
         		   
 	}
 
+    /// <summary>
+    /// Function called when the object's collider that this script is attached to collides with another.
+    /// During collision, there is check for a note, if one exists it is destroyed otherwise a ghost hit has
+    /// been executed.
+    /// </summary>
+    /// <param name="other">The collider instance that belongs to the other object</param>
     void OnTriggerEnter(Collider other) {
         AudioSource audioData = other.GetComponent<AudioSource>();
         audioData.Play(0);

@@ -5,9 +5,15 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
+/// <summary>
+/// Helper class which stores all the heuristic values for a level performance.
+/// </summary>
 [Serializable]
 public class GamePerformance {
 
+    /// <summary>
+    /// Heuristic value for each drum in a drum piece.
+    /// </summary>
     public float hiHat;
     public float crash;
     public float snareDrum;
@@ -27,14 +33,17 @@ public class GamePerformance {
         this.ride = ride;
     }
 
-    public void averageScores(float averageFactor)
+    /// <summary>
+    /// Used when calculating the worst drum across a set of Performance objects.
+    /// </summary>
+    public void averageScores()
     {
         FieldInfo[] fields = typeof(GamePerformance).GetFields();
 
         foreach(FieldInfo field in fields)
         {
             float currentScore = (float)field.GetValue(this);
-            field.SetValue(this, currentScore / averageFactor);
+            field.SetValue(this, currentScore / Constants.PERFORMANCERECORDSIZE);
         }
     }
 

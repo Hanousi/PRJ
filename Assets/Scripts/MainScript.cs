@@ -423,7 +423,7 @@ public class MainScript : MonoBehaviour
             x.ride + y.ride
         ));
 
-        averageScores.averageScores(queue.Count);
+        averageScores.averageScores();
 
         string tag = averageScores.getMaxScore();
         Debug.Log(tag);

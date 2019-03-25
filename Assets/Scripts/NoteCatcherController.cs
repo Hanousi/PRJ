@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Attached to a invisible object behind the drumkit which catches notes which havent been hit successfully.
+/// </summary>
 public class NoteCatcherController : MonoBehaviour {
 
     public Dictionary<string, int> missedNotes = new Dictionary<string, int>() {
@@ -24,6 +27,12 @@ public class NoteCatcherController : MonoBehaviour {
 		
 	}
 
+    /// <summary>
+    /// Called when the object collider that this script is attached to collides with another collider.
+    /// Increments the correct drum counter in the dictionary and destorys the object to keep as little
+    /// objects in the scene as possible.
+    /// </summary>
+    /// <param name="other">The collider instance that belongs to the other object</param>
     private void OnTriggerEnter(Collider other)
     {
         missedNotes[other.gameObject.tag] = missedNotes[other.gameObject.tag] + 1;
