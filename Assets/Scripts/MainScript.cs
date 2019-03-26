@@ -60,7 +60,7 @@ public class MainScript : MonoBehaviour
         { "Crash", 0 },
         { "SnareDrum", 0 },
         { "HiTom", 0 },
-        { "MidTom", 0},
+        { "MiddleTom", 0},
         { "FloorTom", 0},
         { "Ride", 0 }
     };
@@ -159,7 +159,10 @@ public class MainScript : MonoBehaviour
 
     private void AddMiss(string noteName)
     {
-        ghostHits[noteName] = ghostHits[noteName] + 1;
+        if (inGame)
+        {
+            ghostHits[noteName] = ghostHits[noteName] + 1;
+        }
     }
 
     private void DestroyCurrentUI()

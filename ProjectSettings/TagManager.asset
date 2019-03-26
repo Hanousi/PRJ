@@ -20,6 +20,9 @@ TagManager:
   - FloorTom
   - Crash
   - HiHat
+  - XylophoneKey
+  - SteelDrumkey
+  - Controller
   layers:
   - Default
   - TransparentFX

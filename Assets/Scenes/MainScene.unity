@@ -766,7 +766,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 14300000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 2}
       propertyPath: m_Radius
@@ -775,6 +775,14 @@ Prefab:
     - target: {fileID: 11400010, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 2}
       propertyPath: SnapRotation
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 134650, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 2}
+      propertyPath: m_TagString
+      value: Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 168962, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 2}
+      propertyPath: m_TagString
+      value: Controller
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 2}
@@ -3461,7 +3469,7 @@ GameObject:
   - component: {fileID: 862229241}
   m_Layer: 0
   m_Name: B
-  m_TagString: Untagged
+  m_TagString: XylophoneKey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3506,7 +3514,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -3845,7 +3853,7 @@ GameObject:
   - component: {fileID: 904327155}
   m_Layer: 0
   m_Name: E
-  m_TagString: Untagged
+  m_TagString: XylophoneKey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3890,7 +3898,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -4192,7 +4200,7 @@ GameObject:
   - component: {fileID: 980120610}
   m_Layer: 0
   m_Name: C
-  m_TagString: Untagged
+  m_TagString: XylophoneKey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4231,13 +4239,13 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -4396,7 +4404,7 @@ Transform:
   - {fileID: 349040666}
   - {fileID: 1424467855}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1012077457
 GameObject:
@@ -5070,7 +5078,7 @@ Transform:
   - {fileID: 1446301342}
   - {fileID: 1075512772}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1182817728
 Prefab:
@@ -5263,6 +5271,122 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2533edcbff09d2e4cb8854c13cf4e589, type: 2}
+    - target: {fileID: 100082, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100126, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100120, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100118, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100106, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100104, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100098, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100096, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100084, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100074, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100072, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100064, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100062, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100060, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100058, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100050, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100048, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100046, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100038, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100036, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100034, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100026, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100024, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100022, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100016, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
+      propertyPath: m_TagString
+      value: SteelDrumkey
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43ac32f7c1e962143bc84fe0e4bc906f, type: 3}
   m_IsPrefabAsset: 0
@@ -5650,7 +5774,7 @@ GameObject:
   - component: {fileID: 1335434186}
   m_Layer: 0
   m_Name: C2
-  m_TagString: Untagged
+  m_TagString: XylophoneKey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5695,7 +5819,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -5963,7 +6087,7 @@ Transform:
   - {fileID: 245381234}
   - {fileID: 865476812}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1424467854
 GameObject:
@@ -6065,7 +6189,7 @@ GameObject:
   - component: {fileID: 1427058906}
   m_Layer: 0
   m_Name: A
-  m_TagString: Untagged
+  m_TagString: XylophoneKey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6110,7 +6234,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -6549,7 +6673,7 @@ Transform:
   - {fileID: 2101905179}
   - {fileID: 391079002}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1586546961
 GameObject:
@@ -6643,12 +6767,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1586546961}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0, z: -1.513}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.40202528, y: -0.30770922, z: -3.2522388}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1822119729}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1668960438
 GameObject:
@@ -6665,7 +6789,7 @@ GameObject:
   - component: {fileID: 1668960440}
   m_Layer: 0
   m_Name: G
-  m_TagString: Untagged
+  m_TagString: XylophoneKey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6710,7 +6834,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -6945,7 +7069,7 @@ GameObject:
   - component: {fileID: 1694880698}
   m_Layer: 0
   m_Name: F
-  m_TagString: Untagged
+  m_TagString: XylophoneKey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6990,7 +7114,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -7474,6 +7598,7 @@ Transform:
   - {fileID: 561790435}
   - {fileID: 2060600040}
   - {fileID: 1079104441}
+  - {fileID: 1586546966}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7765,7 +7890,7 @@ GameObject:
   - component: {fileID: 1903795797}
   m_Layer: 0
   m_Name: D
-  m_TagString: Untagged
+  m_TagString: XylophoneKey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7810,7 +7935,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
