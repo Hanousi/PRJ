@@ -80,7 +80,6 @@ public class DebugUIBuilder : MonoBehaviour
 
   public void Awake()
   {
-    Debug.Assert(instance == null);
     instance = this;
     menuOffset = transform.position; // TODO: this is unpredictable/busted
     gameObject.SetActive(false);

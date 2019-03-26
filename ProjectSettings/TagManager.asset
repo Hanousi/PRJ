@@ -15,7 +15,6 @@ TagManager:
   - FloorTomNote
   - SnareDrum
   - Ride
-  - MiddleTom
   - HiTom
   - FloorTom
   - Crash
@@ -23,6 +22,7 @@ TagManager:
   - XylophoneKey
   - SteelDrumkey
   - Controller
+  - MidTom
   layers:
   - Default
   - TransparentFX

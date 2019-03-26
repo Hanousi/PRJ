@@ -49,7 +49,6 @@ public class DrumstickController : MonoBehaviour {
         } else if (other.tag == "Controller")
         {
             inHand = other.name[0];
-            Debug.Log(inHand);
         }
     }
 

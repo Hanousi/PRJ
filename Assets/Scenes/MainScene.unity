@@ -1318,7 +1318,7 @@ GameObject:
   - component: {fileID: 457796617}
   m_Layer: 0
   m_Name: SteelDrumBeater
-  m_TagString: Untagged
+  m_TagString: Drumstick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1517,7 +1517,7 @@ GameObject:
   - component: {fileID: 502724573}
   m_Layer: 0
   m_Name: SteelDrumBeater (1)
-  m_TagString: Untagged
+  m_TagString: Drumstick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2418,7 +2418,7 @@ GameObject:
   - component: {fileID: 664336144}
   m_Layer: 0
   m_Name: XylophoneBeater
-  m_TagString: Untagged
+  m_TagString: Drumstick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4435,6 +4435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameAssets: {fileID: 1822119728}
+  nonGameAssets: {fileID: 1180288887}
   noteCatcher: {fileID: 1586546961}
   canvasWithDebug: {fileID: 1733599748331716, guid: 57f048567587dd549a6485a116c03c2d,
     type: 2}
@@ -7443,7 +7444,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1413703312991930, guid: 80ef9f5fa1e74d847928837e7b19678b, type: 2}
       propertyPath: m_TagString
-      value: MiddleTom
+      value: MidTom
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80ef9f5fa1e74d847928837e7b19678b, type: 2}

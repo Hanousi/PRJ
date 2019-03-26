@@ -18,6 +18,7 @@ using System.Reflection;
 public class MainScript : MonoBehaviour
 {
     public GameObject gameAssets;
+    public GameObject nonGameAssets;
     public GameObject noteCatcher;
     /// <summary>
     /// These variables are used to handle the canvasWithDebug object provided with the Oculus integration package in a manner
@@ -60,7 +61,7 @@ public class MainScript : MonoBehaviour
         { "Crash", 0 },
         { "SnareDrum", 0 },
         { "HiTom", 0 },
-        { "MiddleTom", 0},
+        { "MidTom", 0},
         { "FloorTom", 0},
         { "Ride", 0 }
     };
@@ -183,7 +184,7 @@ public class MainScript : MonoBehaviour
         BuildMainMenu();
 
         gameAssets.SetActive(false);
-        DebugUIBuilder.instance.Hide();
+        nonGameAssets.SetActive(true);
         inMenu = false;
     }
 
@@ -368,6 +369,7 @@ public class MainScript : MonoBehaviour
 
         timeLeft = gameLevel.GetDuration();
         gameAssets.SetActive(true);
+        nonGameAssets.SetActive(false);
         inGame = true;
 
         inMenu = false;
@@ -375,7 +377,7 @@ public class MainScript : MonoBehaviour
 
     private void BuildMainMenu()
     {
-        currentUI = Instantiate(canvasWithDebug, new Vector3(0.32f, -0.46f, 2.43f), Quaternion.identity);
+        currentUI = Instantiate(canvasWithDebug, new Vector3(-0.5f, 0f, 3.5f), Quaternion.identity);
 
         DebugUIBuilder.instance.AddDivider();
         DebugUIBuilder.instance.AddButton("Level 1", delegate () { StartGame(1); });
@@ -399,7 +401,7 @@ public class MainScript : MonoBehaviour
                 DebugUIBuilder.instance.AddLabel("It looks like your are struggling with playing the " + aiText + ". Try this exercise out:", DebugUIBuilder.DEBUG_PANE_RIGHT);
                 DebugUIBuilder.instance.AddButton("Level " + levelNumber, delegate () { StartGame(levelNumber); }, DebugUIBuilder.DEBUG_PANE_RIGHT);
 
-                DebugUIBuilder.instance.AddDivider();
+                DebugUIBuilder.instance.AddDivider(DebugUIBuilder.DEBUG_PANE_RIGHT);
 
                 DebugUIBuilder.instance.AddLabel("AI Level:", DebugUIBuilder.DEBUG_PANE_RIGHT);
                 DebugUIBuilder.instance.AddLabel("Have a go at this AI developed level to help improve your weaker skillset!", DebugUIBuilder.DEBUG_PANE_RIGHT);
@@ -679,6 +681,8 @@ public class MainScript : MonoBehaviour
         Type type = instance.GetType();
         FieldInfo fieldInfo = type.GetField(strPropertyName);
 
+        Debug.Log(instance);
+        Debug.Log(strPropertyName);
         return fieldInfo.GetValue(instance);
     }
 
