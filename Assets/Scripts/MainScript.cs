@@ -248,29 +248,37 @@ public class MainScript : MonoBehaviour
     {
         levels = new Dictionary<int, GameLevel>();
 
-        GameLevel game1 = new GameLevel(1, new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f,
-                9, 10, 11, 12, 13, 13.5f, 14, 14.5f, 15, 15.5f, 16, 16.5f,
-                17, 18, 19, 20, 21, 21.5f, 22, 22.5f, 23, 23.5f, 24, 24.5f },
+        GameLevel game1 = new GameLevel(1, new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16 },
             new float[] { },
-            new float[] { },
+            new float[] { 18, 20, 22, 24, 26, 28, 30, 32},
             new float[] { },
             new float[] { },
             new float[] { },
             new float[] { }},
-            18,
+            25,
+            new string[] { "snareDrum" });
+
+        GameLevel game2 = new GameLevel(2, new float[][] { new float[] { 1, 2, 3, 4, 5, 7, 9, 11 },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { 6, 8, 10, 12 }},
+            20,
             new string[] { "hiHat" });
 
-        GameLevel game2 = new GameLevel(2, new float[][] { new float[] { 1, 2, 3, 4, 5, 5.5f, 6, 6.5f, 7, 7.5f, 8, 8.5f },
-            new float[] { 9, 10, 11, 12, 13, 13.5f, 14, 14.5f, 15, 15.5f, 16, 16.5f },
-            new float[] { 17, 18, 19, 20 },
-            new float[] { 21, 21.5f, 22, 22.5f, 23, 23.5f, 24, 24.5f },
-            new float[] { 25, 26, 29, 29.5f, 30, 30.5f },
-            new float[] { 27, 28, 31, 31.5f, 32, 32.5f },
-            new float[] {  }},
-            23,
-            new string[] { });
-
         GameLevel game3 = new GameLevel(3, new float[][] { new float[] { },
+            new float[] { },
+            new float[] { 3, 7, 11, 15, 19 },
+            new float[] { },
+            new float[] { },
+            new float[] { 1, 2, 5, 6, 9, 10, 13, 14, 17, 18 },
+            new float[] { } },
+            20,
+            new string[] { "floorTom" });
+
+        GameLevel game4 = new GameLevel(4, new float[][] { new float[] { },
             new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 },
             new float[] { 3, 7, 11},
             new float[] { },
@@ -280,7 +288,7 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "hiHat", "snareDrum" });
 
-        GameLevel game4 = new GameLevel(4, new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25.5f, 26.5f },
+        GameLevel game5 = new GameLevel(5, new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25.5f, 26.5f },
             new float[] { },
             new float[] { 3, 7, 11, 15, 19, 23, 26 },
             new float[] { },
@@ -290,15 +298,25 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "hiHat", "snareDrum", "floorTom" });
 
-        GameLevel game5 = new GameLevel(5, new float[][] { new float[] { },
+        GameLevel game6 = new GameLevel(6, new float[][] { new float[] { 2, 2.5f, 4, 4.5f, 6, 6.5f, 8, 8.5f, 10, 10.5f, 12, 12.5f, 14, 14.5f },
             new float[] { },
-            new float[] { 3, 7, 11, 15, 19, 23, 27 },
-            new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 },
+            new float[] { 3, 7, 11, 15 },
             new float[] { },
             new float[] { },
+            new float[] { 1, 5, 9, 13 },
             new float[] { }},
             20,
-            new string[] { "hiHat", "snareDrum", "floorTom" });
+            new string[] { "hiHat" });
+
+        GameLevel game7 = new GameLevel(7, new float[][] { new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { 1, 2, 5, 6, 6.5f, 9, 10, 13, 14, 14.5f, 17, 18, 21, 22, 22.5f},
+            new float[] { },
+            new float[] { 3, 7, 11, 15, 19, 23 },
+            new float[] { }},
+            20,
+            new string[] { "hiHat" });
 
         AILevelTemplate template1 = new AILevelTemplate(new float[][] { Array.ConvertAll(Enumerable.Range(1, 28).ToArray(), x => (float)x), new float[] { 3, 7, 11, 15, 19, 23, 27 } }, 20);
         AILevelTemplate template2 = new AILevelTemplate(new float[][] {
@@ -311,6 +329,8 @@ public class MainScript : MonoBehaviour
         levels.Add(3, game3);
         levels.Add(4, game4);
         levels.Add(5, game5);
+        levels.Add(6, game6);
+        levels.Add(7, game7);
 
         levelTemplates.Add(template1);
         levelTemplates.Add(template2);
@@ -385,6 +405,8 @@ public class MainScript : MonoBehaviour
         DebugUIBuilder.instance.AddButton("Level 3", delegate () { StartGame(3); });
         DebugUIBuilder.instance.AddButton("Level 4", delegate () { StartGame(4); });
         DebugUIBuilder.instance.AddButton("Level 5", delegate () { StartGame(5); });
+        DebugUIBuilder.instance.AddButton("Level 6", delegate () { StartGame(6); });
+        DebugUIBuilder.instance.AddButton("Level 7", delegate () { StartGame(7); });
         DebugUIBuilder.instance.AddDivider();
 
         if (performanceRecord.GetQueue().Count == Constants.PERFORMANCERECORDSIZE)
