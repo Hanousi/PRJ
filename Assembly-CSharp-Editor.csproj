@@ -83,8 +83,21 @@
     <Compile Include="Assets\Oculus\Spatializer\Editor\ONSPPropagationGeometryEditor.cs" />
     <Compile Include="Assets\Oculus\Spatializer\Editor\ONSPPropagationMaterialEditor.cs" />
     <Compile Include="Assets\Oculus\Spatializer\Editor\ONSPReflectionCustomGUI.cs" />
+    <Compile Include="Assets\Tests\Editor\AILevelTemplateTests.cs" />
+    <Compile Include="Assets\Tests\Editor\GameLevelTests.cs" />
+    <Compile Include="Assets\Tests\Editor\GamePerformanceTests.cs" />
+    <Compile Include="Assets\Tests\Editor\PerformanceRecordTests.cs" />
     <Reference Include="Assembly-UnityScript">
       <HintPath>C:/Users/tawil/Documents/Percussion Looper/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.StandardEvents">
+      <HintPath>C:/Users/tawil/Documents/Percussion Looper/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>C:/Users/tawil/Documents/Percussion Looper/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>C:/Users/tawil/Documents/Percussion Looper/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/tawil/Documents/Percussion Looper/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
