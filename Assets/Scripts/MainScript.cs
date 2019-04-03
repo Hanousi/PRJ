@@ -246,9 +246,17 @@ public class MainScript : MonoBehaviour
     /// </summary>
     private void LevelSetUp()
     {
-        levels = new Dictionary<int, GameLevel>();
+        GameLevel game1 = new GameLevel(1, new float[][] { new float[] { 1, 4, 7, 10, 13, 16 },
+            new float[] { },
+            new float[] { 1, 2, 2.5f, 3, 4, 5, 5.5f, 6, 7, 8, 8.5f, 9, 10, 11, 11.5f, 12, 13, 14, 14.5f, 15, 16 },
+            new float[] { },
+            new float[] { },
+            new float[] { },
+            new float[] { }},
+            25,
+            new string[] { "snareDrum" });
 
-        GameLevel game1 = new GameLevel(1, new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16 },
+        GameLevel game2 = new GameLevel(2, new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16 },
             new float[] { },
             new float[] { 18, 20, 22, 24, 26, 28, 30, 32},
             new float[] { },
@@ -258,7 +266,7 @@ public class MainScript : MonoBehaviour
             25,
             new string[] { "snareDrum" });
 
-        GameLevel game2 = new GameLevel(2, new float[][] { new float[] { 1, 2, 3, 4, 5, 7, 9, 11 },
+        GameLevel game3 = new GameLevel(3, new float[][] { new float[] { 1, 2, 3, 4, 5, 7, 9, 11 },
             new float[] { },
             new float[] { },
             new float[] { },
@@ -268,7 +276,7 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "hiHat" });
 
-        GameLevel game3 = new GameLevel(3, new float[][] { new float[] { },
+        GameLevel game4 = new GameLevel(4, new float[][] { new float[] { },
             new float[] { },
             new float[] { 3, 7, 11, 15, 19 },
             new float[] { },
@@ -278,7 +286,7 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "floorTom" });
 
-        GameLevel game4 = new GameLevel(4, new float[][] { new float[] { },
+        GameLevel game5 = new GameLevel(5, new float[][] { new float[] { },
             new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 },
             new float[] { 3, 7, 11},
             new float[] { },
@@ -288,7 +296,7 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "hiHat", "snareDrum" });
 
-        GameLevel game5 = new GameLevel(5, new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25.5f, 26.5f },
+        GameLevel game6 = new GameLevel(6, new float[][] { new float[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25.5f, 26.5f },
             new float[] { },
             new float[] { 3, 7, 11, 15, 19, 23, 26 },
             new float[] { },
@@ -298,7 +306,7 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "hiHat", "snareDrum", "floorTom" });
 
-        GameLevel game6 = new GameLevel(6, new float[][] { new float[] { 2, 2.5f, 4, 4.5f, 6, 6.5f, 8, 8.5f, 10, 10.5f, 12, 12.5f, 14, 14.5f },
+        GameLevel game7 = new GameLevel(7, new float[][] { new float[] { 2, 2.5f, 4, 4.5f, 6, 6.5f, 8, 8.5f, 10, 10.5f, 12, 12.5f, 14, 14.5f },
             new float[] { },
             new float[] { 3, 7, 11, 15 },
             new float[] { },
@@ -308,7 +316,7 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "hiHat" });
 
-        GameLevel game7 = new GameLevel(7, new float[][] { new float[] { },
+        GameLevel game8 = new GameLevel(8, new float[][] { new float[] { },
             new float[] { },
             new float[] { },
             new float[] { 1, 2, 5, 6, 6.5f, 9, 10, 13, 14, 14.5f, 17, 18, 21, 22, 22.5f},
@@ -324,13 +332,16 @@ public class MainScript : MonoBehaviour
             new float[] { 3, 7, 11, 15, 19, 23 }
         }, 20);
 
-        levels.Add(1, game1);
-        levels.Add(2, game2);
-        levels.Add(3, game3);
-        levels.Add(4, game4);
-        levels.Add(5, game5);
-        levels.Add(6, game6);
-        levels.Add(7, game7);
+        levels = new Dictionary<int, GameLevel>() {
+            { 1, game1 },
+            { 2, game2 },
+            { 3, game3 },
+            { 4, game4 },
+            { 5, game5 },
+            { 6, game6 },
+            { 7, game7 },
+            { 8, game8 }
+        };
 
         levelTemplates.Add(template1);
         levelTemplates.Add(template2);
