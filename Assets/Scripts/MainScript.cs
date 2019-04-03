@@ -75,12 +75,11 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         LevelSetUp();
+
         dataPath = Path.Combine(Application.persistentDataPath, "PerformanceData.dat");
         performanceRecord = LoadPerformanceData(dataPath);
 
-        //StartGame(3);
         BuildMainMenu();
-
         inMenu = false;
     }
 
@@ -98,7 +97,6 @@ public class MainScript : MonoBehaviour
 
         if (OVRInput.GetDown(OVRInput.Button.Two) || OVRInput.GetDown(OVRInput.Button.Start))
         {
-            Debug.Log("Hani");
             if (inMenu) DebugUIBuilder.instance.Hide();
             else DebugUIBuilder.instance.Show();
             inMenu = !inMenu;
@@ -464,7 +462,7 @@ public class MainScript : MonoBehaviour
         averageScores.averageScores();
 
         string tag = averageScores.getMaxScore();
-        Debug.Log(tag);
+
         CreateAILevel(tag);
 
         foreach (KeyValuePair<int, GameLevel> kvp in levels)
@@ -632,7 +630,7 @@ public class MainScript : MonoBehaviour
             {
                 return (PerformanceRecord)binaryFormatter.Deserialize(fileStream);
             }
-        } catch (FileNotFoundException e)
+        } catch (Exception e)
         {
             Debug.Log("Error: File not found, creating new load file.");
 
@@ -720,8 +718,6 @@ public class MainScript : MonoBehaviour
         Type type = instance.GetType();
         FieldInfo fieldInfo = type.GetField(strPropertyName);
 
-        Debug.Log(instance);
-        Debug.Log(strPropertyName);
         return fieldInfo.GetValue(instance);
     }
 

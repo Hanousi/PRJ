@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,9 +36,14 @@ public class NoteCatcherController : MonoBehaviour {
     /// <param name="other">The collider instance that belongs to the other object</param>
     private void OnTriggerEnter(Collider other)
     {
-        missedNotes[other.gameObject.tag] = missedNotes[other.gameObject.tag] + 1;
+        string otherTag = other.gameObject.tag;
 
-        if (other.gameObject.tag != "Drumstick" && other.gameObject.tag != "Player")
+        if(Array.IndexOf(Constants.noteCatcherInteractables, otherTag) > -1)
+        {
+            missedNotes[otherTag] = missedNotes[otherTag] + 1;
+        }
+
+        if (otherTag != "Drumstick" && otherTag != "Player")
         {
             Destroy(other.gameObject);
         }

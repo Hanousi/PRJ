@@ -83,6 +83,7 @@ public static class Constants {
     public const float RZOFFSET = 0.6f;
 
     public static readonly string[] drumstickInteractables = { "HiHat", "SnareDrum", "Crash", "Ride", "HiTom", "MidTom", "FloorTom", "XylophoneKey", "SteelDrumkey" };
+    public static readonly string[] noteCatcherInteractables = { "HiHatNote", "SnareDrumNote", "CrashNote", "RideNote", "HiTomNote", "MidTomNote", "FloorTomNote" };
 
     public static int drumKey(string drumName)
     {

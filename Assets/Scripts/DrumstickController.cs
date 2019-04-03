@@ -32,7 +32,6 @@ public class DrumstickController : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (Array.IndexOf(Constants.drumstickInteractables, other.tag) > -1) {
             OVRInput.SetControllerVibration(1, 1, inHand == 'R' ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch);
-            Debug.Log("hi");
             AudioSource audioData = other.GetComponent<AudioSource>();
             audioData.Play(0);
 
