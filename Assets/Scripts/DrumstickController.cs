@@ -32,20 +32,27 @@ public class DrumstickController : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (Array.IndexOf(Constants.drumstickInteractables, other.tag) > -1) {
             OVRInput.SetControllerVibration(1, 1, inHand == 'R' ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch);
-
+            Debug.Log("hi");
             AudioSource audioData = other.GetComponent<AudioSource>();
             audioData.Play(0);
 
-            DrumController drumController = other.GetComponent<DrumController>();
-            GameObject note = drumController.note;
-            if (note)
+            try
             {
-                Destroy(note);
-            }
-            else
+                DrumController drumController = other.GetComponent<DrumController>();
+                GameObject note = drumController.note;
+                if (note)
+                {
+                    Destroy(note);
+                }
+                else
+                {
+                    OnMiss(other.tag);
+                }
+            } catch(NullReferenceException e)
             {
-                OnMiss(other.tag);
+
             }
+         
         } else if (other.tag == "Controller")
         {
             inHand = other.name[0];

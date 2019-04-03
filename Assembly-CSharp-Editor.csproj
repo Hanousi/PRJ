@@ -83,6 +83,10 @@
     <Compile Include="Assets\Oculus\Spatializer\Editor\ONSPPropagationGeometryEditor.cs" />
     <Compile Include="Assets\Oculus\Spatializer\Editor\ONSPPropagationMaterialEditor.cs" />
     <Compile Include="Assets\Oculus\Spatializer\Editor\ONSPReflectionCustomGUI.cs" />
+    <Compile Include="Assets\Tests\Editor\AILevelTemplateTests.cs" />
+    <Compile Include="Assets\Tests\Editor\GameLevelTests.cs" />
+    <Compile Include="Assets\Tests\Editor\GamePerformanceTests.cs" />
+    <Compile Include="Assets\Tests\Editor\PerformanceRecordTests.cs" />
     <Reference Include="Assembly-UnityScript">
       <HintPath>C:/Users/Hanousi/Percussion Looper/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
     </Reference>
