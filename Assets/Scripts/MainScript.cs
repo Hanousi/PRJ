@@ -311,7 +311,7 @@ public class MainScript : MonoBehaviour
             new float[] { },
             new float[] { 1, 5, 9, 13 },
             new float[] { }},
-            20,
+            16,
             new string[] { "hiHat" });
 
         GameLevel game8 = new GameLevel(8, new float[][] { new float[] { },
@@ -324,7 +324,7 @@ public class MainScript : MonoBehaviour
             20,
             new string[] { "hiHat" });
 
-        AILevelTemplate template1 = new AILevelTemplate(new float[][] { Array.ConvertAll(Enumerable.Range(1, 28).ToArray(), x => (float)x), new float[] { 3, 7, 11, 15, 19, 23, 27 } }, 20);
+        AILevelTemplate template1 = new AILevelTemplate(new float[][] { Array.ConvertAll(Enumerable.Range(1, 28).ToArray(), x => (float)x), new float[] { 3, 7, 11, 15, 19, 23, 27 } }, 23);
         AILevelTemplate template2 = new AILevelTemplate(new float[][] {
             new float[] { 1, 2.5f, 4, 6.5f, 8, 9, 10.5f, 12, 14.5f, 16, 17, 18.5f, 20, 22.5f, 24 },
             new float[] { 3, 7, 11, 15, 19, 23 }
